@@ -31,7 +31,7 @@
 - `docker exec -it cybersec-db-phase1-ver1 psql -U postgres -d postgres`
 - `docker compose -f 'docker-compose-dev.yml' down 'database'`
 
-**database folder**
+**Database folder**
 - `docker build -t vheikkiniemi/cybersec-db-phase1-ver1 .`
 - `docker push vheikkiniemi/cybersec-db-phase1-ver1`
 
@@ -39,11 +39,19 @@
 - `docker compose -f 'docker-compose-dev.yml' up -d --build 'web'`
 - `docker compose -f 'docker-compose-dev.yml' down 'web'`
 
-**root folder**
+**Root folder**
 - `docker build -t vheikkiniemi/cybersec-web-phase1-ver1 .`
 - `docker push vheikkiniemi/cybersec-web-phase1-ver1`
 
 ### All in
-- `docker compose up --build -d`
-- `docker compose stop`
-- `docker compose down`
+- `docker compose -f 'docker-compose-dev.yml' up --build -d`
+- `docker compose -f 'docker-compose-dev.yml' stop`
+- `docker compose -f 'docker-compose-dev.yml' down`
+
+### Images
+- `docker image ls`
+- `docker rmi <image>`
+
+### Volumes
+- `docker volume ls`
+- `docker volume rm <volume_name>`
