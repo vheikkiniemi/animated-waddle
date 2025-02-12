@@ -1,70 +1,49 @@
 # Docker
 
-
-docker compose -f 'docker-compose.yml' up -d --build 'database'
-docker exec -it cybersec-db-phase1-ver1 psql -U postgres -d postgres
-docker compose -f 'docker-compose.yml' down 'database'
-
-docker compose -f 'docker-compose.yml' up -d --build 'web'
-docker compose -f 'docker-compose.yml' down 'web'
-
-docker-compose up --build -d
- docker-compose down
-
-
-docker build -t vheikkiniemi/cybersec-db-phase1-ver1 .
-docker push vheikkiniemi/cybersec-db-phase1-ver1
-
-docker build -f Dockerfile.database -t vheikkiniemi/cybersec-db-phase1-ver1 .
-docker build -f Dockerfile-web -t vheikkiniemi/cybersec-web-phase1-ver1 .
-
-docker build -t vheikkiniemi/cybersec-phase1-ver1 .
-docker push vheikkiniemi/cybersec-phase1-ver1
-
 ## Client side
 
-1. Load 
-docker compose up --build -d
+### Database
 
-docker compose logs
+1. Download the file from: [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%201/docker-compose.yml)
+2. Try to build and run the database: `docker compose -f 'docker-compose.yml' up -d --build 'database'`
+3. Try to check the table structure: `docker exec -it cybersec-db-phase1-ver1 psql -U postgres -d postgres`
+4. If something doesn't work, try: `docker compose logs`
+5. If you want to delete the database `docker compose -f 'docker-compose.yml' down 'database'`
 
-# Booking system - Phase 1
+### Web
 
-docker compose -f 'docker-compose.yml' up -d --build 'database'
-docker stop cybersec-db-phase1-ver1
-docker compose -f 'docker-compose.yml' down 'database'
+1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%201/docker-compose.yml)
+2. Try to build and run the web interface: `docker compose -f 'docker-compose.yml' up -d --build 'web'`
+3. If something doesn't work, try: `docker compose logs`
+4. If you want to delete the web interface: `docker compose -f 'docker-compose.yml' down 'web'`
 
-docker compose -f 'docker-compose.yml' up -d --build 'web'
-docker stop cybersec-web-phase1-ver1
-docker compose -f 'docker-compose.yml' down 'web'
+### All in
 
+1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%201/docker-compose.yml)
+2. Try to build and run: `docker compose up --build -d`
+3. If something doesn't work, try: `docker compose logs`
 
+## Dev side (teacher's notes)
 
+### Database
 
+- `docker compose -f 'docker-compose-dev.yml' up -d --build 'database'`
+- `docker exec -it cybersec-db-phase1-ver1 psql -U postgres -d postgres`
+- `docker compose -f 'docker-compose-dev.yml' down 'database'`
 
-docker-compose up --build
+**database folder**
+- `docker build -t vheikkiniemi/cybersec-db-phase1-ver1 .`
+- `docker push vheikkiniemi/cybersec-db-phase1-ver1`
 
-docker-compose build --no-cache --pull
+### Web
+- `docker compose -f 'docker-compose-dev.yml' up -d --build 'web'`
+- `docker compose -f 'docker-compose-dev.yml' down 'web'`
 
-docker build --no-cache .
+**root folder**
+- `docker build -t vheikkiniemi/cybersec-web-phase1-ver1 .`
+- `docker push vheikkiniemi/cybersec-web-phase1-ver1`
 
-docker compose up --build --no-cache -d
-
-docker compose stop
-docker compose down
-
-docker build -t vheikkiniemi/cybersec-phase1-ver1 .
-docker push vheikkiniemi/cybersec-phase1-ver1
-
-docker tag local-image:tagname new-repo:tagname
-docker push new-repo:tagname
-
-docker build -t web:cybersec-phase1-ver1 .
-docker run -p 127.0.0.1:8000:8000 web:cybersec-phase1-ver1
-docker tag web vheikkiniemi/web
-docker push vheikkiniemi/web
-
-docker build -t database:cybersec-phase1-ver1 .
-docker run -p 127.0.0.1:5432:5432 database:cybersec-phase1-ver1
-docker tag database vheikkiniemi/database
-docker push vheikkiniemi/database
+### All in
+- `docker compose up --build -d`
+- `docker compose stop`
+- `docker compose down`
