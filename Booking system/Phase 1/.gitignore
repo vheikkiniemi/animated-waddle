@@ -4,3 +4,4 @@ views/
 app.js
 Dockerfile
 docker-compose-dev.yml
+database/
