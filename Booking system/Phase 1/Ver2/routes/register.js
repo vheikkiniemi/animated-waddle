@@ -31,7 +31,7 @@ export async function registerUser(c) {
         registerSchema.parse({ username, password, birthdate, role });
         // Check if the email is unique
         if (!(await isUniqueUsername(username))) {
-            return new Response("Invalid request. Please check your input.", { status: 400 });
+            return new Response("Email already in use!", { status: 400 });
         }
         // Hash the user's password
         const salt = await bcrypt.genSalt(10);
