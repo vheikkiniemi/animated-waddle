@@ -5,4 +5,5 @@ app.js
 Dockerfile
 docker-compose-dev.yml
 database/
+routes/
 .env
