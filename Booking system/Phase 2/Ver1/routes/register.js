@@ -10,7 +10,7 @@ const registerSchema = z.object({
         .email({ message: "Invalid email address" })
         .max(50, "Email must not exceed 50 characters"), // Ensure email format and length
     password: z.string()
-        .min(8, "Password must be at least 8 characters long"), // Ensure password length
+        .min(4, "Password must be at least 4 characters long"), // Ensure password length
     birthdate: z.string().refine((date) => {
         // Ensure birthdate is a valid date
         const birthDateObj = new Date(date);
