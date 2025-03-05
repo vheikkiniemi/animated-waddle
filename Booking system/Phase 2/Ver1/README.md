@@ -5,7 +5,7 @@
 ## Client side
 
 > [!NOTE] 
-> **NOTE! Multi-platform support is now in the testing phase. If you use macOS try this: [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%202/Ver1/docker-compose-multi.yml)**
+> Multi-platform support is now in the testing phase. If you use macOS try this: [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%202/Ver1/docker-compose-multi.yml)
 > Try to build and run: `docker compose up --build -d`
 > If something doesn't work, try: `docker compose logs`
 
