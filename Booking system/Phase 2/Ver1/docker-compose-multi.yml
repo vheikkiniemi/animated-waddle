@@ -1,0 +1,28 @@
+services:
+  database:
+    image: vheikkiniemi/cybersec-db-phase2:v1.1
+    restart: always
+    container_name: cybersec-db-phase2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Secret1234!
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  web:
+    image: vheikkiniemi/cybersec-web-phase2:v1.1
+    container_name: cybersec-web-phase2
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: "postgres://postgres:Secret1234!@host.docker.internal:5432/postgres"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  postgres_data:

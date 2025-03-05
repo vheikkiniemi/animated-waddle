@@ -1,6 +1,6 @@
 # Docker
 
-**Cybersecurity and data privacy - Booking system - Phase 1 - Ver 2**
+**Cybersecurity and data privacy - Booking system - Phase 2**
 
 ## Client side
 
@@ -38,6 +38,9 @@
 - `docker build -t vheikkiniemi/cybersec-db-phase2:v1.0 .`
 - `docker push vheikkiniemi/cybersec-db-phase2:v1.0`
 
+> **Multi-platform**
+- `docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-db-phase2:v1.1 --push .`
+
 ### Web
 - `docker compose -f 'docker-compose-dev.yml' up -d --build 'web'`
 - `docker compose -f 'docker-compose-dev.yml' down 'web' --volumes`
@@ -45,6 +48,9 @@
 **Root folder**
 - `docker build -t vheikkiniemi/cybersec-web-phase2:v1.0 .`
 - `docker push vheikkiniemi/cybersec-web-phase2:v1.0`
+
+> **Multi-platform**
+- `docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-web-phase2:v1.1 --push .`
 
 ### All in
 - `docker compose -p cybersec-phase2 -f 'docker-compose-dev.yml' up --build -d`
