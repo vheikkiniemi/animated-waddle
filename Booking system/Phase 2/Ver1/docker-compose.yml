@@ -1,8 +1,8 @@
 services:
   database:
-    image: vheikkiniemi/cybersec-db-phase1-ver2
+    image: vheikkiniemi/cybersec-db-phase2:v1.0
     restart: always
-    container_name: cybersec-db-phase1-ver2
+    container_name: cybersec-db-phase2
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Secret1234!
@@ -12,8 +12,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   web:
-    image: vheikkiniemi/cybersec-web-phase1-ver2
-    container_name: cybersec-web-phase1-ver2
+    image: vheikkiniemi/cybersec-web-phase2:v1.0
+    container_name: cybersec-web-phase2
     restart: always
     ports:
       - "8000:8000"

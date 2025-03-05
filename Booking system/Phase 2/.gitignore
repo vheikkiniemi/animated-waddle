@@ -2,3 +2,5 @@ Dockerfile
 docker-compose-dev.yml
 database/
 .env
+secret*
+Ver1/db/init.sql
