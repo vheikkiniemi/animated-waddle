@@ -31,7 +31,8 @@
 1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%202/Ver1/docker-compose.yml)
 2. Try to build and run: `docker compose up --build -d`
 3. If something doesn't work, try: `docker compose logs`
-4. If you want to delete all, try: `docker compose down --volumes`
+4. If you want to stop all, try: `docker compose stop`
+5. If you want to delete all, try: `docker compose down --volumes`
 
 ## Dev side (teacher's notes)
 
