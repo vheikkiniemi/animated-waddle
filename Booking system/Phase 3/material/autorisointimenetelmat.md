@@ -185,7 +185,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä'));
 
 ## **3 JWT (JSON Web Token)**
 
-JWT (JSON Web Token) on **kevyt ja turvallinen** tapa toteuttaa autentikointi ja autorisointi web-sovelluksissa. Se on **stateless**, eli se ei vaadi palvelimen muistissa olevaa istuntoa (kuten sessiot), vaan kaikki tieto on sisällytetty itse tokeniin.
+ [JWT (JSON Web Token)](https://jwt.io/) on **kevyt ja turvallinen** tapa toteuttaa autentikointi ja autorisointi web-sovelluksissa. Se on **tilaton**, eli se ei vaadi palvelimen muistissa olevaa istuntoa (kuten sessiot), vaan kaikki tieto on sisällytetty itse tokeniin.
 
 ### **3.1 JWT:n rakenne**  
 JWT koostuu kolmesta osasta, jotka on erotettu pisteillä `.`:  
@@ -196,7 +196,7 @@ header.payload.signature
 
 #### **3.1.1 Header (otsikko)**
 - Sisältää tiedon algoritmista, jolla token on allekirjoitettu.
-- Esimerkki:
+- Esimerkki koodina:
   ```json
   {
     "alg": "HS256",
@@ -206,7 +206,7 @@ header.payload.signature
 
 #### **3.1.2 Payload (sisältö)**
 - Sisältää käyttäjän tiedot ja käyttöoikeudet.
-- Esimerkki:
+- Esimerkki koodina:
   ```json
   {
     "sub": "1234567890",
@@ -215,9 +215,9 @@ header.payload.signature
     "exp": 1711881600
   }
   ```
-  - **"sub"**: käyttäjän tunniste
-  - **"role"**: käyttäjän rooli
-  - **"exp"**: vanhentumisaika (UNIX-aika)
+  - `sub`: käyttäjän tunniste
+  - `role`: käyttäjän rooli
+  - `exp`: vanhentumisaika (UNIX-aika)
 
 #### **3.1.3 Signature (allekirjoitus)**
 - Palvelin allekirjoittaa tokenin varmistaakseen sen aitouden.
@@ -234,7 +234,7 @@ header.payload.signature
 
 #### **3.2.2 JWT lähetetään asiakkaalle**
 - Token palautetaan vastauksessa (esim. JSON-muodossa).
-- Selain tallentaa tokenin joko **localStorage**en tai **HTTP-only-evästeeseen**.
+- Selain tallentaa tokenin joko **localStorageen** tai **HTTP-only-evästeeseen**.
 
 #### **3.2.3 Käyttäjä tekee suojatun pyynnön**
 - Jokaisessa API-pyynnössä käyttäjä lähettää tokenin HTTP-otsakkeessa:
@@ -248,12 +248,12 @@ header.payload.signature
 
 ### **3.3 JWT käytännössä (Node.js + Express)**
 
-#### **3.3.1 Asenna tarvittavat paketit**
+Asennetaan tarvittavat paketit
 ```bash
 npm install express jsonwebtoken dotenv
 ```
 
-#### **3.3.2 Luo palvelin ja JWT-autentikointi**
+Luodaan palvelin ja JWT-autentikointi
 ```javascript
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -299,7 +299,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ### **3.4 JWT vs. Session-pohjainen autentikointi**
 | **Ominaisuus** | **JWT** | **Sessiot** |
-|--------------|--------|---------|
+| :----: |:----:|:----:|
 | **Tilaton?** | ✅ Kyllä | ❌ Ei |
 | **Vaatii palvelimen tallennusta?** | ❌ Ei | ✅ Kyllä |
 | **Skaalautuva?** | ✅ Kyllä | ❌ Ei hyvin |
@@ -317,26 +317,27 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 ✅ Korkean tietoturvan sovellukset  
 
 ### **3.5 JWT:n turvallisuus**
-1. **Älä tallenna JWT:tä localStorageen** (alttius XSS-hyökkäyksille).  
-   - Käytä **HttpOnly-evästettä**, jos mahdollista.  
-2. **Käytä lyhyttä vanhentumisaikaa (`exp`)** ja päivitä token tarvittaessa.  
-3. **Älä sisällytä arkaluontoisia tietoja JWT:hen**, koska se voidaan purkaa ilman salausta.  
-4. **Mitä tehdä, jos token varastetaan?**  
-   - Käytä **blacklistia** palvelimella (esim. Redis).  
+1. Älä tallenna JWT:tä localStorageen (alttius XSS-hyökkäyksille).  
+   - Käytä `HttpOnly-evästettä`, jos mahdollista.  
+2. Käytä lyhyttä vanhentumisaikaa (`exp`) ja päivitä token tarvittaessa.  
+3. Älä sisällytä arkaluontoisia tietoja JWT:hen, koska se voidaan purkaa ilman salausta.  
+4. Mitä tehdä, jos token varastetaan?*
+   - Käytä `blacklistia` palvelimella (esim. Redis).  
 
 ### **3.6 Yhteenveto**
-- **JWT on kevyt ja skaalautuva tapa autentikointiin ja autorisointiin.**  
-- **Hyvä vaihtoehto sessioille API-pohjaisissa sovelluksissa.**  
-- **Vaatii lisäturvatoimia, erityisesti tokenin käsittelyssä.**  
-- **Ei ole helppoa mitätöidä yksittäistä tokenia ilman erillistä blacklistiä.**
+✅ JWT on kevyt ja skaalautuva tapa autentikointiin ja autorisointiin.  
+✅ Hyvä vaihtoehto sessioille API-pohjaisissa sovelluksissa.  
+✅ Vaatii lisäturvatoimia, erityisesti tokenin käsittelyssä.  
+✅ Ei ole helppoa mitätöidä yksittäistä tokenia ilman erillistä blacklistiä.  
 
 ## **4 Autorisointimenetelmät ja sessiot**
 
 ### **4.1 Roolipohjainen autorisointi (RBAC) + sessiot**
-- **Miten se toimii?**  
-  - Käyttäjän rooli (esim. `admin`, `user`, `guest`) tallennetaan sessioon.  
-  - Jokaisessa pyynnössä tarkistetaan sessiosta, kuuluuko käyttäjä oikeaan rooliin.  
-- **Esimerkki:**  
+Miten se toimii?
+- Käyttäjän rooli (esim. `admin`, `user`, `guest`) tallennetaan sessioon.  
+- Jokaisessa pyynnössä tarkistetaan sessiosta, kuuluuko käyttäjä oikeaan rooliin.  
+
+Esimerkki koodina:  
   ```javascript
   if (req.session.user && req.session.user.role === 'admin') {
       res.send("Tervetuloa admin-sivulle!");
@@ -344,15 +345,16 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-- **Sopii hyvin:**  
-  - Web-sovelluksiin, joissa käyttäjäroolit ovat selkeät ja harvoin muuttuvat.  
-  - Intranetit, hallintapaneelit, verkkokaupat.
+Sopii hyvin:  
+✅ Web-sovelluksiin, joissa käyttäjäroolit ovat selkeät ja harvoin muuttuvat.  
+✅ Intranetit, hallintapaneelit, verkkokaupat.
 
 ### **4.2 Oikeuspohjainen autorisointi (PBAC) + sessiot**
-- **Miten se toimii?**  
-  - Sen sijaan että sessioon tallennetaan vain rooli, siihen tallennetaan yksittäisiä oikeuksia (esim. `"can_edit_users": true`).
-  - Jokaisessa pyynnössä tarkistetaan, onko käyttäjällä oikeus toimintaan.
-- **Esimerkki:**  
+Miten se toimii?
+- Sen sijaan että sessioon tallennetaan vain rooli, siihen tallennetaan yksittäisiä oikeuksia (esim. `"can_edit_users": true`).
+- Jokaisessa pyynnössä tarkistetaan, onko käyttäjällä oikeus toimintaan.
+
+Esimerkki koodina: 
   ```javascript
   if (req.session.user && req.session.user.permissions.includes("edit_users")) {
       res.send("Voit muokata käyttäjiä!");
@@ -360,8 +362,8 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-- **Sopii hyvin:**  
-  - Suuriin sovelluksiin, joissa käyttäjien käyttöoikeudet voivat muuttua usein.
+Sopii hyvin:  
+✅ Suuriin sovelluksiin, joissa käyttäjien käyttöoikeudet voivat muuttua usein.
 
 ### **4.3 Aihepohjainen autorisointi (ABAC) + sessiot**
 - **Miten se toimii?**  
