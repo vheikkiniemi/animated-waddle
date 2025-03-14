@@ -97,8 +97,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
    - Palvelin poistaa session tiedot ja eväste mitätöityy.
 
 >[!NOTE]
-> Istunto voi olla lyhytkestoinen ja kestää vain niin kauan kuin käyttäjä on aktiivinen verkkosivulla.
-> Sessio voi jatkua, vaikka käyttäjä sulkisi selaimen ja palaisi myöhemmin takaisin, jos sessiotiedot on tallennettu esimerkiksi evästeisiin.
+> - Istunto voi olla lyhytkestoinen ja kestää vain niin kauan kuin käyttäjä on aktiivinen verkkosivulla.
+> - Sessio voi jatkua, vaikka käyttäjä sulkisi selaimen ja palaisi myöhemmin takaisin, jos sessiotiedot on tallennettu esimerkiksi evästeisiin.
 
 ### **2.2 Sessioiden tallennusvaihtoehdot**
 Sessioita voidaan tallentaa eri tavoin:
