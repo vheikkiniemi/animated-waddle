@@ -93,12 +93,13 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
    - Palvelin tarkistaa session tietokannasta tai muistista (esim. Redis) ja antaa pääsyn vain, jos käyttäjä on valtuutettu.  
 
 4. **Sessio päättyy:**  
-   - Kun käyttäjä **kirjautuu ulos** tai sessio vanhenee (esim. 30 min käyttämättömyys).  
+   - Kun käyttäjä `kirjautuu ulos` tai sessio vanhenee (esim. 30 min käyttämättömyys).  
    - Palvelin poistaa session tiedot ja eväste mitätöityy.
 
->[!NOTE]
-> - Istunto voi olla lyhytkestoinen ja kestää vain niin kauan kuin käyttäjä on aktiivinen verkkosivulla.
-> - Sessio voi jatkua, vaikka käyttäjä sulkisi selaimen ja palaisi myöhemmin takaisin, jos sessiotiedot on tallennettu esimerkiksi evästeisiin.
+>[!NOTE]  
+> ✅ Istunto voi olla lyhytkestoinen ja kestää vain niin kauan kuin käyttäjä on aktiivinen verkkosivulla.  
+> ✅ Sessio voi jatkua, vaikka käyttäjä sulkisi selaimen ja palaisi myöhemmin takaisin, jos sessiotiedot on tallennettu esimerkiksi evästeisiin.  
+> ✅ Sessio on laajempi käsite, joka kattaa koko käyttäjän vierailun verkkosivustolla. Se voi sisältää useita istuntoja.
 
 ### **2.2 Sessioiden tallennusvaihtoehdot**
 Sessioita voidaan tallentaa eri tavoin:
@@ -116,7 +117,7 @@ Sessioita voidaan tallentaa eri tavoin:
   - Käyttö: **suurten sovellusten sessionhallinta**.
 
 ### **2.3 Sessioihin perustuva autorisointi käytännössä (Node.js + Express)**
-Tässä esimerkki siitä, miten sessioita voidaan käyttää Node.js-palvelimella Express.js:n ja `express-session`-kirjaston avulla:
+Tässä esimerkki siitä, miten sessioita voidaan käyttää `Node.js`-palvelimella `Express.js`:n ja `express-session`-kirjaston avulla:
 
 ```javascript
 const express = require('express');
@@ -173,14 +174,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä'));
   cookie: { sameSite: 'Strict' }
   ```
 - **Sessioiden aikaraja ja automaattinen vanhentuminen:**  
-  - Käyttäjän istunto suljetaan automaattisesti inaktiivisuuden jälkeen.  
-- **Session re-generointi autentikoinnin jälkeen:**  
+  - Käyttäjän istunto suljetaan automaattisesti käyttämättömyyden jälkeen.  
+- **Session uudelleenluonti autentikoinnin jälkeen:**  
   - Vähentää sessioiden kaappaamisen riskiä.
 
 ### **2.6 Milloin käyttää sessioita?**
-- **Perinteiset web-sovellukset, joissa käyttäjä pysyy kirjautuneena pitkään**.  
-- **Sovellukset, joissa käyttöoikeuksien hallinta on monimutkaista** (esim. roolipohjainen käyttöoikeus).
-- **Kun palvelin haluaa säilyttää kontrollin istunnoista**, esimerkiksi tietoturvasyistä.  
+✅ Perinteiset web-sovellukset, joissa käyttäjä pysyy kirjautuneena pitkään.  
+✅ Sovellukset, joissa käyttöoikeuksien hallinta on monimutkaista (esim. roolipohjainen käyttöoikeus).  
+✅ Kun palvelin haluaa säilyttää kontrollin istunnoista, esimerkiksi tietoturvasyistä.  
 
 ## **3 JWT (JSON Web Token)**
 
