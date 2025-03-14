@@ -1,13 +1,16 @@
+> [!NOTE]
+> Materiaalin laadinnassa hyödynnetty ChatGPT-tekoälysovellusta
+
 # **Autorisointi web-ympäristöissä**
 
-Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyoikeuksien hallintaa sen jälkeen, kun hänet on tunnistettu (autentikoitu). Autorisoinnissa käytetään usein erilaisia menetelmiä ja tekniikoita.
+Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyoikeuksien hallintaa sen jälkeen, kun hänet on tunnistettu (autentikoitu). Autorisointiin käytetään usein erilaisia menetelmiä ja tekniikoita.
 
 ## **1 Yleisimmät autorisointimenetelmät**
 
 ### **1.1 Roolipohjainen autorisointi (RBAC, Role-Based Access Control)**  
 - Käyttäjille määritetään roolit (esim. `admin`, `user`, `guest`) ja käyttöoikeudet perustuvat rooleihin.  
 - Esimerkki: `Admin` voi muokata tietoja, `User` voi lukea ja päivittää, `Guest` voi vain lukea.  
-- **Esimerkki:**
+- Esimerkki koodina:
   ```json
   {
     "username": "ville",
@@ -18,8 +21,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 
 ### **1.2 Oikeuspohjainen autorisointi (PBAC, Permission-Based Access Control)**  
 - Käyttöoikeudet määritetään yksittäisinä oikeuksina (esim. `"read_reports"`, `"edit_users"`, `"delete_posts"`), joita voi antaa rooleille tai yksittäisille käyttäjille.  
-- Joustavampi kuin RBAC, koska oikeudet eivät ole kiinteästi sidottuja rooleihin.  
-- **Esimerkki:**
+- Joustavampi kuin `RBAC`, koska oikeudet eivät ole kiinteästi sidottuja rooleihin.  
+- Esimerkki koodina:
   ```json
   {
     "username": "ville",
@@ -32,7 +35,7 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 - Käyttöoikeudet perustuvat käyttäjän, resurssin tai ympäristön attribuutteihin (esim. `ikä`, `osasto`, `sijainti`, `kellonaika`).  
 - Esimerkki: `HR-osaston työntekijä voi nähdä työntekijätiedot vain työaikana ja vain oman osastonsa osalta`.  
 - Hyödyllinen monimutkaisissa järjestelmissä.
-- **Esimerkki:**
+- Esimerkki koodina:
   ```json
   {
     "username": "ville",
@@ -44,10 +47,10 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 
 ### **1.4 Token-pohjainen autorisointi**  
 - Tokenit (esim. `JWT`, `OAuth 2.0`, `OpenID Connect`) mahdollistavat käyttöoikeuksien hallinnan ilman jatkuvia kirjautumisia.  
-- **JSON Web Token (JWT)** – sisältää käyttäjän tiedot ja oikeudet, lähetetään jokaisessa pyynnössä.  
-- **OAuth 2.0** – käytetään API-kutsujen valtuutukseen (esim. kirjautuminen Googlella tai Facebookilla).  
-- **OpenID Connect (OIDC)** – laajennus OAuth 2.0:lle, joka mahdollistaa myös käyttäjän autentikoinnin.
-- **Käyttökohteet:** API-rajapinnat, mikroservice-arkkitehtuurit.
+- `JSON Web Token (JWT)` – sisältää käyttäjän tiedot ja oikeudet, lähetetään jokaisessa pyynnössä.  
+- `OAuth 2.0` – käytetään API-kutsujen valtuutukseen (esim. kirjautuminen Googlella tai Facebookilla).  
+- `OpenID Connect (OIDC)` – laajennus OAuth 2.0:lle, joka mahdollistaa myös käyttäjän autentikoinnin.
+- **Käyttökohteet:** API-rajapinnat
 
 ### **1.5 Kontekstipohjainen autorisointi**  
 - Pääsy myönnetään tilanteen mukaan (esim. `IP-osoite`, `laite`, `sijainti`, `käyttäytymismalli`).  
@@ -82,8 +85,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
    - Sovellus tarkistaa tunnistetiedot ja luo session.  
    
 2. **Istunnon luonti:**  
-   - Palvelin luo **session ID**:n ja tallentaa sen käyttäjän tietoihin (esim. käyttäjärooli, käyttöoikeudet).  
-   - Session ID lähetetään käyttäjälle **evästeenä (cookie)**.  
+   - Palvelin luo `session ID`:n ja tallentaa sen käyttäjän tietoihin (esim. käyttäjärooli, käyttöoikeudet).  
+   - Session ID lähetetään käyttäjälle `evästeenä (cookie)`.  
 
 3. **Sessio seuraa käyttäjää:**  
    - Jokaisessa pyynnössä selain lähettää session ID:n evästeenä takaisin palvelimelle.  
@@ -92,6 +95,10 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 4. **Sessio päättyy:**  
    - Kun käyttäjä **kirjautuu ulos** tai sessio vanhenee (esim. 30 min käyttämättömyys).  
    - Palvelin poistaa session tiedot ja eväste mitätöityy.
+
+>[!NOTE]
+> Istunto voi olla lyhytkestoinen ja kestää vain niin kauan kuin käyttäjä on aktiivinen verkkosivulla.
+> Sessio voi jatkua, vaikka käyttäjä sulkisi selaimen ja palaisi myöhemmin takaisin, jos sessiotiedot on tallennettu esimerkiksi evästeisiin.
 
 ### **2.2 Sessioiden tallennusvaihtoehdot**
 Sessioita voidaan tallentaa eri tavoin:
@@ -434,12 +441,12 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 | **Delegoitu (OAuth 2.0 Delegation)** | ✅ | Käytetään, kun sovellus tekee pyyntöjä käyttäjän puolesta. |
 
 ### **4.9 Päätelmä**
-- **Sessioiden käyttö on hyödyllistä, kun halutaan pitää käyttäjän tila hallinnassa palvelimen puolella.**  
-- **Useimmat autorisointimenetelmät voidaan yhdistää sessioihin, mutta token-pohjainen lähestymistapa voi olla parempi API-pohjaisissa järjestelmissä.**  
-- **Valinta riippuu sovelluksen tarpeista: jos käyttäjän tila pitää säilyttää palvelimen puolella, sessiot ovat hyödyllisiä. Jos taas tarvitaan skaalautuva ja hajautettu ratkaisu, token-pohjainen lähestymistapa voi olla parempi.**
+- Sessioiden käyttö on hyödyllistä, kun halutaan pitää käyttäjän tila hallinnassa palvelimen puolella.
+- Useimmat autorisointimenetelmät voidaan yhdistää sessioihin, mutta token-pohjainen lähestymistapa voi olla parempi API-pohjaisissa järjestelmissä.  
+- Valinta riippuu sovelluksen tarpeista: jos käyttäjän tila pitää säilyttää palvelimen puolella, sessiot ovat hyödyllisiä. Jos taas tarvitaan skaalautuva ja hajautettu ratkaisu, token-pohjainen lähestymistapa voi olla parempi.
 
 
-### **5 Autorisointimenetelmät ja JWT**  
+## **5 Autorisointimenetelmät ja JWT**  
 
 ### **5.1 Roolipohjainen autorisointi (RBAC) + JWT**
 - JWT sisältää käyttäjän roolin payload-osassa.
