@@ -19,6 +19,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
   ```
 - **Käyttökohteet:** Verkkopalvelut, joissa on selkeät roolit.
 
+---
+
 ### **1.2 Oikeuspohjainen autorisointi (PBAC, Permission-Based Access Control)**  
 - Käyttöoikeudet määritetään yksittäisinä oikeuksina (esim. `"read_reports"`, `"edit_users"`, `"delete_posts"`), joita voi antaa rooleille tai yksittäisille käyttäjille.  
 - Joustavampi kuin `RBAC`, koska oikeudet eivät ole kiinteästi sidottuja rooleihin.  
@@ -30,6 +32,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
   }
   ```
 - **Käyttökohteet:** Sovellukset, joissa käyttäjien oikeudet muuttuvat usein.
+
+---
 
 ### **1.3 Aihepohjainen autorisointi (ABAC, Attribute-Based Access Control)**  
 - Käyttöoikeudet perustuvat käyttäjän, resurssin tai ympäristön attribuutteihin (esim. `ikä`, `osasto`, `sijainti`, `kellonaika`).  
@@ -45,6 +49,8 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
   ```
 - **Käyttökohteet:** Suuryritykset ja dynaamiset tietojärjestelmät.
 
+---
+
 ### **1.4 Token-pohjainen autorisointi**  
 - Tokenit (esim. `JWT`, `OAuth 2.0`, `OpenID Connect`) mahdollistavat käyttöoikeuksien hallinnan ilman jatkuvia kirjautumisia.  
 - `JSON Web Token (JWT)` – sisältää käyttäjän tiedot ja oikeudet, lähetetään jokaisessa pyynnössä.  
@@ -52,30 +58,40 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 - `OpenID Connect (OIDC)` – laajennus OAuth 2.0:lle, joka mahdollistaa myös käyttäjän autentikoinnin.
 - **Käyttökohteet:** API-rajapinnat
 
+---
+
 ### **1.5 Kontekstipohjainen autorisointi**  
 - Pääsy myönnetään tilanteen mukaan (esim. `IP-osoite`, `laite`, `sijainti`, `käyttäytymismalli`).  
 - Esimerkki: `Jos käyttäjä yrittää kirjautua tuntemattomasta laitteesta, hänen on vahvistettava henkilöllisyytensä lisävarmenteella`.  
 - Käytössä esimerkiksi `Google Workspace Security` ja `Zero Trust` -arkkitehtuurit.
 - **Esimerkki:** Vain Suomessa oleva käyttäjä voi kirjautua sisään.
 
+---
+
 ### **1.6 Hierarkkinen ja monitasoinen autorisointi**  
 - Monimutkaisemmissa sovelluksissa autorisointi voi olla hierarkkinen, esim. `esimiehet voivat tarkastella työntekijöidensä tietoja mutta eivät muiden tiimien tietoja`.  
 - Yhdistää usein `RBAC`- ja `ABAC`-menetelmiä.
+
+---
 
 ### **1.7 Pääsylistat (ACL, Access Control List)**  
 - Jokaisella resurssilla on luettelo käyttäjistä ja heidän oikeuksistaan (esim. `lukeminen`, `kirjoittaminen`, `suorittaminen`).  
 - Käytetään usein tiedostojärjestelmissä ja verkkopalvelimilla, mutta ei aina skaalautuva suurissa järjestelmissä.
 
+---
+
 ### **1.8 Delegoitu autorisointi (Delegated Authorization)**  
 - Käyttäjä voi myöntää pääsyn resursseihinsa toiselle käyttäjälle tai sovellukselle (esim. `OAuth 2.0 Delegation`).  
 - Esimerkki: `Google Drive antaa käyttäjän valita, kuka saa katsella, kommentoida tai muokata tiedostoa`.
 
-### **Mikä menetelmä sopii parhaiten?**  
-- **Pienet sovellukset:** RBAC + JWT  
-- **Suuret yrityskäyttöjärjestelmät:** ABAC + OAuth 2.0  
-- **API-käyttö:** OAuth 2.0 tai API-avaimet  
-- **Korkean tietoturvan sovellukset:** Zero Trust -lähestymistapa (mukaan lukien kontekstipohjainen autorisointi)
+**Mikä menetelmä sopii parhaiten?**  
 
+✅ **Pienet sovellukset:** RBAC + JWT  
+✅ **Suuret yrityskäyttöjärjestelmät:** ABAC + OAuth 2.0  
+✅ **API-käyttö:** OAuth 2.0 tai API-avaimet  
+✅ **Korkean tietoturvan sovellukset:** Zero Trust -lähestymistapa (mukaan lukien kontekstipohjainen autorisointi)
+
+---
 
 ## **2 Sessioiden käyttö**
 
@@ -104,17 +120,19 @@ Web-ympäristöissä autorisointi tarkoittaa käyttäjän oikeuksien ja pääsyo
 ### **2.2 Sessioiden tallennusvaihtoehdot**
 Sessioita voidaan tallentaa eri tavoin:
 
-- **Palvelimen muistissa**  
-  - Nopea, mutta ei skaalautuva (jos palvelimia on useita, sessio ei säily niiden välillä).  
-  - Käyttö: **pienet sovellukset**.
+**Palvelimen muistissa**  
+- Nopea, mutta ei skaalautuva (jos palvelimia on useita, sessio ei säily niiden välillä).  
+- Käyttö: **pienet sovellukset**.
 
-- **Tietokannassa (esim. MySQL, PostgreSQL, MongoDB)**  
-  - Skaalautuva, mutta tietokanta voi hidastua suuren käyttäjämäärän kanssa.  
-  - Käyttö: **monikäyttäjäympäristöt**.
+**Tietokannassa (esim. MySQL, PostgreSQL, MongoDB)**  
+- Skaalautuva, mutta tietokanta voi hidastua suuren käyttäjämäärän kanssa.  
+- Käyttö: **monikäyttäjäympäristöt**.
 
-- **Redis- tai Memcached-muistivarastossa**  
-  - Nopea ja skaalautuva ratkaisu, sopii suuriin järjestelmiin.  
-  - Käyttö: **suurten sovellusten sessionhallinta**.
+**Redis- tai Memcached-muistivarastossa**  
+- Nopea ja skaalautuva ratkaisu, sopii suuriin järjestelmiin.  
+- Käyttö: **suurten sovellusten sessionhallinta**.
+
+---
 
 ### **2.3 Sessioihin perustuva autorisointi käytännössä (Node.js + Express)**
 Tässä esimerkki siitä, miten sessioita voidaan käyttää `Node.js`-palvelimella `Express.js`:n ja `express-session`-kirjaston avulla:
@@ -163,6 +181,8 @@ app.get('/logout', (req, res) => {
 app.listen(3000, () => console.log('Palvelin käynnissä'));
 ```
 
+---
+
 ### **2.4 Sessioiden turvallisuus**
 - **HttpOnly-evästeet:** Evästeitä ei voi lukea JavaScriptillä, vähentää XSS-riskiä.  
   ```javascript
@@ -178,10 +198,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä'));
 - **Session uudelleenluonti autentikoinnin jälkeen:**  
   - Vähentää sessioiden kaappaamisen riskiä.
 
+---
+
 ### **2.6 Milloin käyttää sessioita?**
 ✅ Perinteiset web-sovellukset, joissa käyttäjä pysyy kirjautuneena pitkään.  
 ✅ Sovellukset, joissa käyttöoikeuksien hallinta on monimutkaista (esim. roolipohjainen käyttöoikeus).  
 ✅ Kun palvelin haluaa säilyttää kontrollin istunnoista, esimerkiksi tietoturvasyistä.  
+
+---
 
 ## **3 JWT (JSON Web Token)**
 
@@ -309,13 +333,17 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 
 **Milloin käyttää JWT:tä?**  
+
 ✅ API-rajapinnat (esim. mikroserviitit)  
 ✅ Hajautetut järjestelmät  
 ✅ Kertakirjautuminen (SSO)  
 
 **Milloin käyttää sessioita?**  
+
 ✅ Perinteiset web-sovellukset  
 ✅ Korkean tietoturvan sovellukset  
+
+---
 
 ### **3.5 JWT:n turvallisuus**
 1. Älä tallenna JWT:tä localStorageen (alttius XSS-hyökkäyksille).  
@@ -325,11 +353,15 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 4. Mitä tehdä, jos token varastetaan?*
    - Käytä `blacklistia` palvelimella (esim. Redis).  
 
+---
+
 ### **3.6 Yhteenveto**
 ✅ JWT on kevyt ja skaalautuva tapa autentikointiin ja autorisointiin.  
 ✅ Hyvä vaihtoehto sessioille API-pohjaisissa sovelluksissa.  
 ✅ Vaatii lisäturvatoimia, erityisesti tokenin käsittelyssä.  
 ✅ Ei ole helppoa mitätöidä yksittäistä tokenia ilman erillistä blacklistiä.  
+
+---
 
 ## **4 Autorisointimenetelmät ja sessiot**
 
@@ -351,6 +383,8 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 ✅ Web-sovelluksiin, joissa käyttäjäroolit ovat selkeät ja harvoin muuttuvat.  
 ✅ Intranetit, hallintapaneelit, verkkokaupat.
 
+---
+
 ### **4.2 Oikeuspohjainen autorisointi (PBAC) + sessiot**
 **Miten se toimii?**
 - Sen sijaan että sessioon tallennetaan vain rooli, siihen tallennetaan yksittäisiä oikeuksia (esim. `"can_edit_users": true`).
@@ -368,12 +402,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ✅ Suuriin sovelluksiin, joissa käyttäjien käyttöoikeudet voivat muuttua usein.
 
+---
+
 ### **4.3 Aihepohjainen autorisointi (ABAC) + sessiot**
 **Miten se toimii?**  
 - Sessioon tallennetaan käyttäjän ominaisuuksia (esim. osasto, sijainti, työaika).  
 - Pääsy myönnetään vain, jos käyttäjän ominaisuudet täyttävät vaatimukset.  
 
-**Esimerkki:**  
+**Esimerkki koodina:**  
   ```javascript
   if (req.session.user && req.session.user.department === "HR" && withinBusinessHours()) {
       res.send("Voit nähdä työntekijätiedot!");
@@ -386,12 +422,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ✅ Yrityskäyttöön, jossa käyttöoikeudet riippuvat kontekstista.
 
+---
+
 ### **4.4 Token-pohjainen autorisointi (JWT, OAuth 2.0) + sessiot**
 **Miten se toimii?**  
 - Token voidaan `tallentaa sessioon` sen sijaan, että sitä säilytetään selaimen evästeenä tai LocalStoragessa.  
 - Tämän avulla voidaan yhdistää sessioihin perustuva ja token-pohjainen lähestymistapa.  
 
-**Esimerkki:**  
+**Esimerkki koodina:**  
   ```javascript
   req.session.token = "eyJhbGciOiJIUzI1...";
   ```
@@ -401,12 +439,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ✅ Sovelluksiin, joissa tarvitaan yhdistelmä sessioiden ja tokenien hallintaa.
 
+---
+
 ### **4.5 Kontekstipohjainen autorisointi + sessiot**
 **Miten se toimii?**  
 - Sessioon tallennetaan tietoja käyttäjän laitteen, IP-osoitteen tai sijainnin perusteella.  
 - Jos konteksti muuttuu epäilyttävästi (esim. kirjautuminen eri maasta), voidaan vaatia lisätodennus.  
 
-**Esimerkki:**  
+**Esimerkki koodina:**  
   ```javascript
   if (req.session.user && req.session.user.ip === req.ip) {
       res.send("Pääsy myönnetty");
@@ -419,12 +459,14 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ✅ Turvallisuuskriittisiin sovelluksiin (pankit, yrityssovellukset).
 
+---
+
 ### **4.6 Access Control List (ACL) + sessiot**
 **Miten se toimii?** 
   - Sessioon tallennetaan käyttäjän oikeudet tiettyihin resursseihin (esim. "voit muokata vain omia tiedostoja").  
   - Jokaisessa pyynnössä tarkistetaan ACL:stä, saako käyttäjä käyttää resurssia.  
 
-**Esimerkki:**  
+**Esimerkki koodina:**  
   ```javascript
   if (req.session.user && acl.check(req.session.user.id, req.params.fileId, "read")) {
       res.send("Tiedoston sisältö");
@@ -437,11 +479,13 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 
 ✅ Tiedostopalveluihin, projektinhallintajärjestelmiin.
 
+---
+
 ### **4.7 Delegoitu autorisointi (OAuth 2.0 Delegation) + sessiot**
 **Miten se toimii?**  
 - Sessioon tallennetaan käyttäjän OAuth 2.0 -valtuutus, ja pyyntöjä tehdään käyttäjän puolesta.  
 
-**Esimerkki:**  
+**Esimerkki koodina:**  
   ```javascript
   req.session.oauthToken = "ya29.a0ARrda...";
   ```
@@ -449,6 +493,8 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 **Sopii hyvin:**  
 
 ✅ Kolmannen osapuolen palveluihin (Google Drive, Facebook API).
+
+---
 
 ### **4.8 Yhteenveto: Milloin sessiot yhdistetään autorisointimenetelmiin?**
 | Autorisointimenetelmä | Voiko käyttää sessioiden kanssa? | Hyvä yhdistelmä? |
@@ -467,6 +513,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 ✅ Useimmat autorisointimenetelmät voidaan yhdistää sessioihin, mutta token-pohjainen lähestymistapa voi olla parempi API-pohjaisissa järjestelmissä.  
 ✅ Valinta riippuu sovelluksen tarpeista: jos käyttäjän tila pitää säilyttää palvelimen puolella, sessiot ovat hyödyllisiä. Jos taas tarvitaan skaalautuva ja hajautettu ratkaisu, token-pohjainen lähestymistapa voi olla parempi.
 
+---
 
 ## **5 Autorisointimenetelmät ja JWT**  
 
@@ -474,7 +521,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 - JWT sisältää käyttäjän roolin payload-osassa.
 - Jokaisessa pyynnössä palvelin tarkistaa, onko käyttäjällä tarvittava rooli.
 
-#### **5.1.1 Esimerkki: JWT payload RBAC:lle**
+**Esimerkki koodina: JWT payload RBAC:lle**
 ```json
 {
   "sub": "1234567890",
@@ -484,7 +531,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 }
 ```
 
-#### **5.1.2 Esimerkki: RBAC:n tarkistus Express.js-palvelimessa**
+**Esimerkki koodina: RBAC:n tarkistus Express.js-palvelimessa**
 ```javascript
 function authorizeRole(role) {
     return (req, res, next) => {
@@ -501,11 +548,13 @@ app.get('/admin', authenticateToken, authorizeRole("admin"), (req, res) => {
 });
 ```
 
+---
+
 ### **5.2 Oikeuspohjainen autorisointi (PBAC) + JWT**
 - JWT:ssä voidaan tallentaa yksittäisiä käyttöoikeuksia (permissions).
 - Jokaisessa pyynnössä tarkistetaan, onko käyttäjällä oikeus tiettyyn toimintaan.
 
-#### **5.2.1 Esimerkki: JWT payload PBAC:lle**
+**Esimerkki koodina: JWT payload PBAC:lle**
 ```json
 {
   "sub": "1234567890",
@@ -514,7 +563,7 @@ app.get('/admin', authenticateToken, authorizeRole("admin"), (req, res) => {
 }
 ```
 
-#### **5.2.2 Esimerkki: Oikeuksien tarkistus Express.js-palvelimessa**
+**Esimerkki koodina: Oikeuksien tarkistus Express.js-palvelimessa**
 ```javascript
 function authorizePermission(permission) {
     return (req, res, next) => {
@@ -531,11 +580,13 @@ app.get('/edit-user', authenticateToken, authorizePermission("edit_users"), (req
 });
 ```
 
+---
+
 ### **5.3 Aihepohjainen autorisointi (ABAC) + JWT**
 - JWT sisältää käyttäjän attribuutteja (esim. osasto, sijainti, työaika).
 - Palvelin tarkistaa, vastaavatko attribuutit pääsyvaatimuksia.
 
-#### **5.3.1 Esimerkki: JWT payload ABAC:lle**
+**Esimerkki koodina: JWT payload ABAC:lle**
 ```json
 {
   "sub": "1234567890",
@@ -545,7 +596,7 @@ app.get('/edit-user', authenticateToken, authorizePermission("edit_users"), (req
 }
 ```
 
-#### **5.3.2 Esimerkki: Attribuuttipohjainen tarkistus**
+**Esimerkki koodina: Attribuuttipohjainen tarkistus**
 ```javascript
 function authorizeByDepartment(department) {
     return (req, res, next) => {
@@ -562,11 +613,13 @@ app.get('/hr-dashboard', authenticateToken, authorizeByDepartment("HR"), (req, r
 });
 ```
 
+---
+
 ### **5.4 Kontekstipohjainen autorisointi (Zero Trust) + JWT**
 - JWT sisältää tietoa käyttäjän kirjautumistavasta, IP-osoitteesta tai laitteesta.
 - Jos konteksti muuttuu, palvelin voi hylätä pyynnön.
 
-#### **5.4.1 Esimerkki: JWT payload Zero Trust -mallissa**
+**Esimerkki koodina: JWT payload Zero Trust -mallissa**
 ```json
 {
   "sub": "1234567890",
@@ -576,7 +629,9 @@ app.get('/hr-dashboard', authenticateToken, authorizeByDepartment("HR"), (req, r
 }
 ```
 
-#### **5.4.2 Esimerkki: Kontekstin tarkistus**
+---
+
+**Esimerkki koodina: Kontekstin tarkistus**
 ```javascript
 function verifyContext(req, res, next) {
     if (req.user.ip !== req.ip) {
@@ -590,11 +645,13 @@ app.get('/secure-data', authenticateToken, verifyContext, (req, res) => {
 });
 ```
 
+---
+
 ### **5.5 Delegoitu autorisointi (OAuth 2.0) + JWT**
 - JWT:tä käytetään OAuth 2.0:ssa valtuutuksen todistamiseen.
 - Käyttäjä antaa kolmannelle osapuolelle pääsyn resursseihinsa.
 
-#### **5.5.1 Esimerkki: OAuth 2.0 -pohjainen JWT**
+**Esimerkki koodina: OAuth 2.0 -pohjainen JWT**
 ```json
 {
   "sub": "1234567890",
@@ -603,7 +660,7 @@ app.get('/secure-data', authenticateToken, verifyContext, (req, res) => {
 }
 ```
 
-#### **5.5.2 Esimerkki: OAuth-scopejen tarkistus**
+**Esimerkki koodina: OAuth-scopejen tarkistus**
 ```javascript
 function authorizeScope(requiredScope) {
     return (req, res, next) => {
@@ -619,19 +676,23 @@ app.get('/user-profile', authenticateToken, authorizeScope("read:user"), (req, r
 });
 ```
 
-### **5.6 JWT vs. Sessioiden käyttö autorisoinnissa**
-| **Autorisoitava menetelmä** | **JWT** | **Sessio** |
-|----------------------|----------------|---------------|
-| **RBAC** (roolipohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan palvelimelle |
-| **PBAC** (oikeuspohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan sessioon |
-| **ABAC** (attribuuttipohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan sessioon |
-| **Zero Trust** | ✅ Sisältää IP- ja laiteseurantaa | ✅ Palvelimen hallitsema |
-| **OAuth 2.0** | ✅ Käytetään API-pyynnöissä | ❌ Ei käytetä sessioita |
+---
 
-### **5.7 Yhteenveto**
-- **JWT sopii hyvin API-pohjaisiin järjestelmiin**, koska se on **stateless** eikä vaadi palvelimelle tallennettavaa sessiota.
-- **Sessioihin perustuva autorisointi sopii perinteisiin web-sovelluksiin**, joissa käyttäjän tila halutaan säilyttää palvelimen muistissa.
-- **Yhdistelmä JWT + sessiot voi olla hyödyllinen**, jos halutaan skaalautuvuutta, mutta myös mahdollisuus mitätöidä yksittäisiä käyttäjäsessioita.
-- **Valinta riippuu sovelluksen tarpeista**:  
+### **5.6 JWT vs. Sessioiden käyttö autorisoinnissa**
+| Autorisoiva menetelmä | JWT | Sessio |
+|:----:|:----:|:----:|
+| `RBAC` (roolipohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan palvelimelle |
+| `PBAC` (oikeuspohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan sessioon |
+| `ABAC` (attribuuttipohjainen) | ✅ Sisältyy tokeniin | ✅ Tallennetaan sessioon |
+| `Zero Trust` | ✅ Sisältää IP- ja laiteseurantaa | ✅ Palvelimen hallitsema |
+| `OAuth 2.0` | ✅ Käytetään API-pyynnöissä | ❌ Ei käytetä sessioita |
+
+---
+
+### **5.7 Yhteenveto**  
+✅ **JWT sopii hyvin API-pohjaisiin järjestelmiin**, koska se on **tilaton** eikä vaadi palvelimelle tallennettavaa sessiota.  
+✅ **Sessioihin perustuva autorisointi sopii perinteisiin web-sovelluksiin**, joissa käyttäjän tila halutaan säilyttää palvelimen muistissa.  
+✅ **Yhdistelmä JWT + sessiot voi olla hyödyllinen**, jos halutaan skaalautuvuutta, mutta myös mahdollisuus mitätöidä yksittäisiä käyttäjäsessioita.  
+✅ **Valinta riippuu sovelluksen tarpeista**:  
   - **Jos haluat skaalautuvuutta ja API-ystävällisen ratkaisun → käytä JWT:tä.**  
   - **Jos tarvitset enemmän kontrollia ja turvallista istunnonhallintaa → käytä sessioita.** 
