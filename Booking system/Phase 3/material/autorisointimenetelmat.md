@@ -307,6 +307,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 | **API-ystävällinen?** | ✅ Kyllä | ❌ Ei |
 | **Helppo mitätöinti?** | ❌ Ei (vaatii blacklistin) | ✅ Kyllä |
 
+
 **Milloin käyttää JWT:tä?**  
 ✅ API-rajapinnat (esim. mikroserviitit)  
 ✅ Hajautetut järjestelmät  
@@ -333,11 +334,11 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 ## **4 Autorisointimenetelmät ja sessiot**
 
 ### **4.1 Roolipohjainen autorisointi (RBAC) + sessiot**
-Miten se toimii?
+**Miten se toimii?**
 - Käyttäjän rooli (esim. `admin`, `user`, `guest`) tallennetaan sessioon.  
 - Jokaisessa pyynnössä tarkistetaan sessiosta, kuuluuko käyttäjä oikeaan rooliin.  
 
-Esimerkki koodina:  
+**Esimerkki koodina:**  
   ```javascript
   if (req.session.user && req.session.user.role === 'admin') {
       res.send("Tervetuloa admin-sivulle!");
@@ -345,16 +346,17 @@ Esimerkki koodina:
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-Sopii hyvin:  
+**Sopii hyvin:**  
+
 ✅ Web-sovelluksiin, joissa käyttäjäroolit ovat selkeät ja harvoin muuttuvat.  
 ✅ Intranetit, hallintapaneelit, verkkokaupat.
 
 ### **4.2 Oikeuspohjainen autorisointi (PBAC) + sessiot**
-Miten se toimii?
+**Miten se toimii?**
 - Sen sijaan että sessioon tallennetaan vain rooli, siihen tallennetaan yksittäisiä oikeuksia (esim. `"can_edit_users": true`).
 - Jokaisessa pyynnössä tarkistetaan, onko käyttäjällä oikeus toimintaan.
 
-Esimerkki koodina: 
+**Esimerkki koodina:** 
   ```javascript
   if (req.session.user && req.session.user.permissions.includes("edit_users")) {
       res.send("Voit muokata käyttäjiä!");
@@ -362,14 +364,16 @@ Esimerkki koodina:
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-Sopii hyvin:  
+**Sopii hyvin:**  
+
 ✅ Suuriin sovelluksiin, joissa käyttäjien käyttöoikeudet voivat muuttua usein.
 
 ### **4.3 Aihepohjainen autorisointi (ABAC) + sessiot**
-- **Miten se toimii?**  
-  - Sessioon tallennetaan käyttäjän ominaisuuksia (esim. osasto, sijainti, työaika).  
-  - Pääsy myönnetään vain, jos käyttäjän ominaisuudet täyttävät vaatimukset.  
-- **Esimerkki:**  
+**Miten se toimii?**  
+- Sessioon tallennetaan käyttäjän ominaisuuksia (esim. osasto, sijainti, työaika).  
+- Pääsy myönnetään vain, jos käyttäjän ominaisuudet täyttävät vaatimukset.  
+
+**Esimerkki:**  
   ```javascript
   if (req.session.user && req.session.user.department === "HR" && withinBusinessHours()) {
       res.send("Voit nähdä työntekijätiedot!");
@@ -377,26 +381,32 @@ Sopii hyvin:
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-- **Sopii hyvin:**  
-  - Yrityskäyttöön, jossa käyttöoikeudet riippuvat kontekstista.
+
+**Sopii hyvin:**  
+
+✅ Yrityskäyttöön, jossa käyttöoikeudet riippuvat kontekstista.
 
 ### **4.4 Token-pohjainen autorisointi (JWT, OAuth 2.0) + sessiot**
-- **Miten se toimii?**  
-  - Token voidaan **tallentaa sessioon** sen sijaan, että sitä säilytetään selaimen evästeenä tai LocalStoragessa.  
-  - Tämän avulla voidaan yhdistää sessioihin perustuva ja token-pohjainen lähestymistapa.  
-- **Esimerkki:**  
+**Miten se toimii?**  
+- Token voidaan `tallentaa sessioon` sen sijaan, että sitä säilytetään selaimen evästeenä tai LocalStoragessa.  
+- Tämän avulla voidaan yhdistää sessioihin perustuva ja token-pohjainen lähestymistapa.  
+
+**Esimerkki:**  
   ```javascript
   req.session.token = "eyJhbGciOiJIUzI1...";
   ```
   - Jokaisessa pyynnössä palvelin käyttää tokenia varmistaakseen käyttäjän oikeudet.  
-- **Sopii hyvin:**  
-  - Sovelluksiin, joissa tarvitaan yhdistelmä sessioiden ja tokenien hallintaa.
+
+**Sopii hyvin:**  
+
+✅ Sovelluksiin, joissa tarvitaan yhdistelmä sessioiden ja tokenien hallintaa.
 
 ### **4.5 Kontekstipohjainen autorisointi + sessiot**
-- **Miten se toimii?**  
-  - Sessioon tallennetaan tietoja käyttäjän laitteen, IP-osoitteen tai sijainnin perusteella.  
-  - Jos konteksti muuttuu epäilyttävästi (esim. kirjautuminen eri maasta), voidaan vaatia lisätodennus.  
-- **Esimerkki:**  
+**Miten se toimii?**  
+- Sessioon tallennetaan tietoja käyttäjän laitteen, IP-osoitteen tai sijainnin perusteella.  
+- Jos konteksti muuttuu epäilyttävästi (esim. kirjautuminen eri maasta), voidaan vaatia lisätodennus.  
+
+**Esimerkki:**  
   ```javascript
   if (req.session.user && req.session.user.ip === req.ip) {
       res.send("Pääsy myönnetty");
@@ -404,14 +414,17 @@ Sopii hyvin:
       res.status(403).send("Epäilyttävä kirjautuminen, varmista henkilöllisyytesi.");
   }
   ```
-- **Sopii hyvin:**  
-  - Turvallisuuskriittisiin sovelluksiin (pankit, yrityssovellukset).
+
+**Sopii hyvin:**  
+
+✅ Turvallisuuskriittisiin sovelluksiin (pankit, yrityssovellukset).
 
 ### **4.6 Access Control List (ACL) + sessiot**
-- **Miten se toimii?**  
+**Miten se toimii?** 
   - Sessioon tallennetaan käyttäjän oikeudet tiettyihin resursseihin (esim. "voit muokata vain omia tiedostoja").  
   - Jokaisessa pyynnössä tarkistetaan ACL:stä, saako käyttäjä käyttää resurssia.  
-- **Esimerkki:**  
+
+**Esimerkki:**  
   ```javascript
   if (req.session.user && acl.check(req.session.user.id, req.params.fileId, "read")) {
       res.send("Tiedoston sisältö");
@@ -419,34 +432,40 @@ Sopii hyvin:
       res.status(403).send("Ei käyttöoikeutta!");
   }
   ```
-- **Sopii hyvin:**  
-  - Tiedostopalveluihin, projektinhallintajärjestelmiin.
+
+**Sopii hyvin:**  
+
+✅ Tiedostopalveluihin, projektinhallintajärjestelmiin.
 
 ### **4.7 Delegoitu autorisointi (OAuth 2.0 Delegation) + sessiot**
-- **Miten se toimii?**  
-  - Sessioon tallennetaan käyttäjän OAuth 2.0 -valtuutus, ja pyyntöjä tehdään käyttäjän puolesta.  
-- **Esimerkki:**  
+**Miten se toimii?**  
+- Sessioon tallennetaan käyttäjän OAuth 2.0 -valtuutus, ja pyyntöjä tehdään käyttäjän puolesta.  
+
+**Esimerkki:**  
   ```javascript
   req.session.oauthToken = "ya29.a0ARrda...";
   ```
-- **Sopii hyvin:**  
-  - Kolmannen osapuolen palveluihin (Google Drive, Facebook API).
+
+**Sopii hyvin:**  
+
+✅ Kolmannen osapuolen palveluihin (Google Drive, Facebook API).
 
 ### **4.8 Yhteenveto: Milloin sessiot yhdistetään autorisointimenetelmiin?**
 | Autorisointimenetelmä | Voiko käyttää sessioiden kanssa? | Hyvä yhdistelmä? |
-|----------------------|----------------|---------------|
-| **RBAC** (roolipohjainen) | ✅ | Kyllä, yksinkertainen ja tehokas. |
-| **PBAC** (oikeuspohjainen) | ✅ | Sopii, jos oikeuksia on paljon ja ne muuttuvat usein. |
-| **ABAC** (attribuuttipohjainen) | ✅ | Käytännöllinen, mutta voi vaatia monimutkaisempaa sessiorakennetta. |
-| **Token-pohjainen (JWT, OAuth)** | ⚠️ | Yleensä tokenit ovat tilattomia, mutta voidaan tallentaa sessioon. |
-| **Kontekstipohjainen (Zero Trust)** | ✅ | Sopii tietoturvakriittisiin järjestelmiin. |
-| **ACL** (pääsylista) | ✅ | Hyvä, jos oikeudet liittyvät yksittäisiin resursseihin. |
-| **Delegoitu (OAuth 2.0 Delegation)** | ✅ | Käytetään, kun sovellus tekee pyyntöjä käyttäjän puolesta. |
+|:----:|:----:|:----:|
+| `RBAC` (roolipohjainen) | ✅ | Kyllä, yksinkertainen ja tehokas. |
+| `PBAC` (oikeuspohjainen) | ✅ | Sopii, jos oikeuksia on paljon ja ne muuttuvat usein. |
+| `ABAC` (attribuuttipohjainen) | ✅ | Käytännöllinen, mutta voi vaatia monimutkaisempaa sessiorakennetta. |
+| Token-pohjainen (`JWT`, `OAuth`) | ⚠️ | Yleensä tokenit ovat tilattomia, mutta voidaan tallentaa sessioon. |
+| Kontekstipohjainen (`Zero Trust`) | ✅ | Sopii tietoturvakriittisiin järjestelmiin. |
+| `ACL` (pääsylista) | ✅ | Hyvä, jos oikeudet liittyvät yksittäisiin resursseihin. |
+| Delegoitu (`OAuth 2.0 Delegation`) | ✅ | Käytetään, kun sovellus tekee pyyntöjä käyttäjän puolesta. |
 
-### **4.9 Päätelmä**
-- Sessioiden käyttö on hyödyllistä, kun halutaan pitää käyttäjän tila hallinnassa palvelimen puolella.
-- Useimmat autorisointimenetelmät voidaan yhdistää sessioihin, mutta token-pohjainen lähestymistapa voi olla parempi API-pohjaisissa järjestelmissä.  
-- Valinta riippuu sovelluksen tarpeista: jos käyttäjän tila pitää säilyttää palvelimen puolella, sessiot ovat hyödyllisiä. Jos taas tarvitaan skaalautuva ja hajautettu ratkaisu, token-pohjainen lähestymistapa voi olla parempi.
+**Pohdintaa**  
+
+✅ Sessioiden käyttö on hyödyllistä, kun halutaan pitää käyttäjän tila hallinnassa palvelimen puolella.  
+✅ Useimmat autorisointimenetelmät voidaan yhdistää sessioihin, mutta token-pohjainen lähestymistapa voi olla parempi API-pohjaisissa järjestelmissä.  
+✅ Valinta riippuu sovelluksen tarpeista: jos käyttäjän tila pitää säilyttää palvelimen puolella, sessiot ovat hyödyllisiä. Jos taas tarvitaan skaalautuva ja hajautettu ratkaisu, token-pohjainen lähestymistapa voi olla parempi.
 
 
 ## **5 Autorisointimenetelmät ja JWT**  
