@@ -1,5 +1,5 @@
 > [!NOTE]
-> Materiaalin laadinnassa hyödynnetty ChatGPT-tekoälysovellusta
+> Materiaalin laadinnassa hyödynnetty ChatGPT- ja Copilot-tekoälysovellusta
 
 # **Autorisointi web-ympäristöissä**
 
@@ -140,7 +140,6 @@ Tässä esimerkki siitä, miten sessioita voidaan käyttää `Node.js`-palvelime
 ```javascript
 const express = require('express');
 const session = require('express-session');
-
 const app = express();
 
 // Session-asetukset
@@ -209,16 +208,17 @@ app.listen(3000, () => console.log('Palvelin käynnissä'));
 
 ## **3 JWT (JSON Web Token)**
 
- [JWT (JSON Web Token)](https://jwt.io/) on **kevyt ja turvallinen** tapa toteuttaa autentikointi ja autorisointi web-sovelluksissa. Se on **tilaton**, eli se ei vaadi palvelimen muistissa olevaa istuntoa (kuten sessiot), vaan kaikki tieto on sisällytetty itse tokeniin.
+[JWT (JSON Web Token)](https://jwt.io/) on **kevyt ja turvallinen** tapa toteuttaa autentikointi ja autorisointi web-sovelluksissa. Se on **tilaton**, eli se ei vaadi palvelimen muistissa olevaa istuntoa (kuten sessiot), vaan kaikki tieto on sisällytetty itse tokeniin.
 
 ### **3.1 JWT:n rakenne**  
 JWT koostuu kolmesta osasta, jotka on erotettu pisteillä `.`:  
-
 ```
 header.payload.signature
 ```
 
-#### **3.1.1 Header (otsikko)**
+---
+
+**Header (otsikko)**
 - Sisältää tiedon algoritmista, jolla token on allekirjoitettu.
 - Esimerkki koodina:
   ```json
@@ -228,7 +228,9 @@ header.payload.signature
   }
   ```
 
-#### **3.1.2 Payload (sisältö)**
+---
+
+**Payload (sisältö)**
 - Sisältää käyttäjän tiedot ja käyttöoikeudet.
 - Esimerkki koodina:
   ```json
@@ -243,32 +245,38 @@ header.payload.signature
   - `role`: käyttäjän rooli
   - `exp`: vanhentumisaika (UNIX-aika)
 
-#### **3.1.3 Signature (allekirjoitus)**
+---
+
+**Signature (allekirjoitus)**
 - Palvelin allekirjoittaa tokenin varmistaakseen sen aitouden.
 - Esimerkiksi **HMAC SHA256** -algoritmilla:
   ```
   HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)
   ```
 
+---
+
 ### **3.2 JWT:n käyttö**
 
-#### **3.2.1 Käyttäjä kirjautuu sisään**
-- Käyttäjä antaa tunnukset.
-- Palvelin tarkistaa ne ja luo JWT:n.
+1. **Käyttäjä kirjautuu sisään**
+    - Käyttäjä antaa tunnukset.
+    - Palvelin tarkistaa ne ja luo JWT:n.
 
-#### **3.2.2 JWT lähetetään asiakkaalle**
-- Token palautetaan vastauksessa (esim. JSON-muodossa).
-- Selain tallentaa tokenin joko **localStorageen** tai **HTTP-only-evästeeseen**.
+2. **JWT lähetetään asiakkaalle**
+    - Token palautetaan vastauksessa (esim. JSON-muodossa).
+    - Selain tallentaa tokenin joko **localStorageen** tai **HTTP-only-evästeeseen**.
 
-#### **3.2.3 Käyttäjä tekee suojatun pyynnön**
-- Jokaisessa API-pyynnössä käyttäjä lähettää tokenin HTTP-otsakkeessa:
-  ```
-  Authorization: Bearer eyJhbGciOiJIUzI1...
-  ```
-- Palvelin **ei tarvitse istuntotietoja**, vaan voi tarkistaa tokenin sisällön.
+3. **Käyttäjä tekee suojatun pyynnön**
+    - Jokaisessa API-pyynnössä käyttäjä lähettää tokenin HTTP-otsakkeessa:
+      ```
+      Authorization: Bearer eyJhbGciOiJIUzI1...
+      ```
+    - Palvelin **ei tarvitse istuntotietoja**, vaan voi tarkistaa tokenin sisällön.
 
-#### **3.2.4 Palvelin tarkistaa JWT:n**
-- Palvelin avaa tokenin, varmistaa sen allekirjoituksen ja tarkistaa käyttöoikeudet.
+4. **Palvelin tarkistaa JWT:n**
+  - Palvelin avaa tokenin, varmistaa sen allekirjoituksen ja tarkistaa käyttöoikeudet.
+
+---
 
 ### **3.3 JWT käytännössä (Node.js + Express)**
 
@@ -321,6 +329,8 @@ function authenticateToken(req, res, next) {
 app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 ```
 
+---
+
 ### **3.4 JWT vs. Session-pohjainen autentikointi**
 | **Ominaisuus** | **JWT** | **Sessiot** |
 | :----: |:----:|:----:|
@@ -331,6 +341,7 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 | **API-ystävällinen?** | ✅ Kyllä | ❌ Ei |
 | **Helppo mitätöinti?** | ❌ Ei (vaatii blacklistin) | ✅ Kyllä |
 
+---
 
 **Milloin käyttää JWT:tä?**  
 
@@ -506,6 +517,8 @@ app.listen(3000, () => console.log('Palvelin käynnissä portissa 3000'));
 | Kontekstipohjainen (`Zero Trust`) | ✅ | Sopii tietoturvakriittisiin järjestelmiin. |
 | `ACL` (pääsylista) | ✅ | Hyvä, jos oikeudet liittyvät yksittäisiin resursseihin. |
 | Delegoitu (`OAuth 2.0 Delegation`) | ✅ | Käytetään, kun sovellus tekee pyyntöjä käyttäjän puolesta. |
+
+---
 
 **Pohdintaa**  
 
