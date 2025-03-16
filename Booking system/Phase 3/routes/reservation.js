@@ -1,4 +1,4 @@
-import { getSession } from "../sessionService.js"; // For sessions
+import { getSession } from "../sessionService.js"; // Session management
 import client from "../db/db.js";
 
 // Get user UUID
@@ -8,7 +8,7 @@ async function getUserUUID(username) {
 }
 
 export async function registerReservation(req) {
-    const reserverUsername = req.get("reserver_username");
+    const reserverUsername = req.get("reserver_token");
     const resourceId = req.get("resource_id");
     const reservationStart = req.get("reservation_start");
     const reservationEnd = req.get("reservation_end");
@@ -21,6 +21,29 @@ export async function registerReservation(req) {
         return new Response(error.message || "Error during reservations", { status: 500 });
     }
 }
+
+export async function getReservationById(id) {
+    const query = `SELECT reservation_id, reserver_token, resource_id, reservation_start, reservation_end FROM zephyr_reservations WHERE reservation_id = $1`;
+    const result = await client.queryObject(query, [id]);
+    return result.rows[0] || null;
+}
+
+export async function updateReservation(formData) {
+    const reservationId = formData.get("reservation_id");
+    const reserver = formData.get("reserver_token");
+    const resourceId = formData.get("resource_id");
+    const reservationStart = formData.get("reservation_start");
+    const reservationEnd = formData.get("reservation_end");
+    try {
+        const query = `UPDATE zephyr_reservations SET reserver_token = $2, resource_id = $3, reservation_start = $4, reservation_end = $5 WHERE reservation_id = $1`;
+        await client.queryArray(query, [reservationId, reserver, resourceId, reservationStart, reservationEnd]);
+        return new Response(null, { status: 302, headers: { Location: "/", }, });
+    } catch (error) {
+        console.error(error);
+        return new Response("Error during updating resource", { status: 500 });
+    }
+}
+
 
 export async function handleReservationForm(req) {
     const session = await getSession(req);
@@ -41,10 +64,16 @@ export async function handleReservationForm(req) {
         <div class="container">
             <h1>Create Reservation</h1>
             <form action="/reservation" method="POST">
+
+                <!-- Reservation ID (hidden for new entries) -->
+                <div class="form-group">
+                    <input type="hidden" name="reservation_id" id="reservation_id">
+                </div>
+
                 <!-- Reserver username (pre-filled) -->
                 <div class="form-group">
                     <label for="reserver_token">Reserver username:</label>
-                    <input type="text" name="reserver_username" id="reserver_username" value="${session.username}" readonly>
+                    <select name="reserver_token" id="reserver_token" required></select>
                 </div>
 
                 <!-- Other form fields -->
@@ -65,7 +94,8 @@ export async function handleReservationForm(req) {
                 </div>
             </form>
         </div>
-        <script src="/static/reservations.js"></script>
+        <script src="/static/reservationsForm.js"></script>
+
     </body>
     </html>
     `;

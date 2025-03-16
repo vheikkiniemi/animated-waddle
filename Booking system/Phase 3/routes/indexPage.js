@@ -30,6 +30,8 @@ async function getReservationsWithUser() {
     try {
         const query = `
         SELECT
+            res.reservation_id,
+            r.resource_id,
             r.resource_name,
             res.reservation_start,
             res.reservation_end,
@@ -44,8 +46,8 @@ async function getReservationsWithUser() {
         const tableRows = result.rows
             .map(row => `
                 <tr>
-                    <td>${row.resource_name}</td>
-                    <td>${new Date(row.reservation_start).toLocaleString()}</td>
+                    <td><a href="/resources?id=${row.resource_id}">${row.resource_name}</a></td>
+                    <td><a href="/reservation?id=${row.reservation_id}">${new Date(row.reservation_start).toLocaleString()}</a></td>
                     <td>${new Date(row.reservation_end).toLocaleString()}</td>
                     <td>${row.reserver_username}</td>
                 </tr>

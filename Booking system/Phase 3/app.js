@@ -1,28 +1,21 @@
 import { serve } from "https://deno.land/std@0.199.0/http/server.ts";
-import { registerUser } from "./routes/register.js"; // Import register logic
-import { loginUser } from "./routes/login.js"; // Import login logic
-import { registerResource, getResources } from "./routes/resource.js";
-import { registerReservation, handleReservationForm } from "./routes/reservation.js";
-import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js";
-import { getSession, destroySession, getCookieValue } from "./sessionService.js"; // Updated session handling
+import { registerUser } from "./routes/register.js"; // Handles user registration logic
+import { loginUser } from "./routes/login.js"; // Handles user login logic
+import { getAllUsers } from "./routes/user.js";  // CRUD for users
+import { registerResource, getResources, getResourceById, updateResource } from "./routes/resource.js"; // CRUD for resources
+import { registerReservation, handleReservationForm, getReservationById, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
+import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
+import { getSession, destroySession, getCookieValue } from "./sessionService.js"; // Session management
+import { getSessionInfo } from "./routes/sessionService.js";
 
 let connectionInfo = {}; // Store connection details for logging purposes
 
-// Middleware to set security headers globally
+// Middleware: Apply security headers globally to all responses
 async function addSecurityHeaders(req, handler) {
     const response = await handler(req);
-
-    // Set security headers
-    response.headers.set("Content-Security-Policy",
-        "default-src 'self'; " +
-        "script-src 'self'; " +
-        "style-src 'self'; " +
-        "img-src 'self'; " +
-        "frame-ancestors 'none'; " +
-        "form-action 'self';"); // Allow form submissions only to your domain
-    response.headers.set("X-Frame-Options", "DENY"); // Prevent Clickjacking
+    response.headers.set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; frame-ancestors 'none'; form-action 'self';");
+    response.headers.set("X-Frame-Options", "DENY"); // Prevent clickjacking
     response.headers.set("X-Content-Type-Options", "nosniff"); // Prevent MIME type sniffing
-
     return response;
 }
 
@@ -38,58 +31,52 @@ async function serveStaticFile(path, contentType) {
     }
 }
 
-// Handle incoming requests
+// Main request handler
 async function handler(req) {
     const url = new URL(req.url);
-
-    // Retrieve session
     const session = await getSession(req);
 
-    // Route: Serve static files
+    // Serve static assets (CSS, JS, images)
     if (url.pathname.startsWith("/static/")) {
         const filePath = `.${url.pathname}`;
         const contentType = getContentType(filePath);
         return await serveStaticFile(filePath, contentType);
     }
 
-    // Route: Index page
+    // Render index page depending on session
     if (url.pathname === "/" && req.method === "GET") {
         return session ? await handleIndex(req) : await handleDefaultIndex(req);
     }
 
-    // Route: Registration page
+    // Serve registration form
     if (url.pathname === "/register" && req.method === "GET") {
         return await serveStaticFile("./views/register.html", "text/html");
     }
 
-    // Route: Handle user registration
+    // Handle user registration form submission
     if (url.pathname === "/register" && req.method === "POST") {
         const formData = await req.formData();
         return await registerUser(formData);
     }
 
-    // Route: Login page
+    // Serve login form
     if (url.pathname === "/login" && req.method === "GET") {
         return await serveStaticFile("./views/login.html", "text/html");
     }
 
-    // Route: Handle user login
+    // Handle login form submission
     if (url.pathname === "/login" && req.method === "POST") {
         const formData = await req.formData();
         return await loginUser(formData, connectionInfo);
     }
 
-    // Route: Handle user log out
+    // Handle user logout and session destruction
     if (url.pathname === "/logout" && req.method === "GET") {
-        // Destroy session
         const cookies = req.headers.get("Cookie") || "";
         const sessionId = getCookieValue(cookies, "session_id");
-
         if (sessionId) {
             await destroySession(sessionId);
         }
-
-        // Clear the session cookie and redirect to the index page
         return new Response(null, {
             status: 302,
             headers: {
@@ -99,53 +86,107 @@ async function handler(req) {
         });
     }
 
-    // Route: Resource page (Requires authentication)
+    // Serve resource management form
     if (url.pathname === "/resources" && req.method === "GET") {
-        if (!session) {
-            return new Response("Unauthorized", { status: 401 });
-        }
+        if (!session) return new Response("Unauthorized", { status: 401 });
+        const id = url.searchParams.get("id");
         return await serveStaticFile("./views/resource.html", "text/html");
     }
 
-    // Route: Handle resources (Requires authentication)
+    // Handle resource creation or update
     if (url.pathname === "/resources" && req.method === "POST") {
-        if (!session) {
-            return new Response("Unauthorized", { status: 401 });
-        }
+        if (!session) return new Response("Unauthorized", { status: 401 });
         const formData = await req.formData();
-        return await registerResource(formData);
-    }
-
-    // Route: Reservations page (Requires authentication)
-    if (url.pathname === "/reservation" && req.method === "GET") {
-        if (!session) {
-            return new Response("Unauthorized", { status: 401 });
+        if (formData.get("resource_id")) {
+            return await updateResource(formData);
+        } else {
+            return await registerResource(formData);
         }
-        return await handleReservationForm(req);
     }
 
-    // Route: List of resources (Requires authentication)
-    if (url.pathname === "/resourcesList" && req.method === "GET") {
+    // API: return single resource details by ID (AJAX calls)
+    if (url.pathname.startsWith("/api/resources/") && req.method === "GET") {
+        if (!session) return new Response("Unauthorized", { status: 401 });
+        const id = url.pathname.split("/").pop();
+        const resource = await getResourceById(id);
+        if (resource) {
+            return new Response(JSON.stringify(resource), { headers: { "Content-Type": "application/json" } });
+        } else {
+            return new Response("Not found", { status: 404 });
+        }
+    }
+
+    // API: return all resources in JSON (for dropdowns etc.)
+    if (url.pathname === "/api/resources" && req.method === "GET") {
         if (!session) {
             return new Response("Unauthorized", { status: 401 });
         }
         return await getResources();
     }
+    
+    // Serve reservation form
+    if (url.pathname === "/reservation" && req.method === "GET") {
+        if (!session) return new Response("Unauthorized", { status: 401 });
+        const id = url.searchParams.get("id");
+        if (id) return await handleReservationForm(req);
+        return await serveStaticFile("./views/reservation.html", "text/html");
+    }
 
-    // Route: Handle reservations (Requires authentication)
+    // Handle reservation creation
     if (url.pathname === "/reservation" && req.method === "POST") {
         if (!session) {
             return new Response("Unauthorized", { status: 401 });
         }
         const formData = await req.formData();
-        return await registerReservation(formData);
+        console.log(formData);
+        if (formData.get("reservation_id")) {
+            return await updateReservation(formData);
+        } else {
+            return await registerReservation(formData);
+        }
     }
 
-    // Default response for unknown routes
+    // API: return single resource details by ID (AJAX calls)
+    if (url.pathname.startsWith("/api/reservations/") && req.method === "GET") {
+        if (!session) return new Response("Unauthorized", { status: 401 });
+        const id = url.pathname.split("/").pop();
+        const reservation = await getReservationById(id);
+        if (reservation) {
+            return new Response(JSON.stringify(reservation), { headers: { "Content-Type": "application/json" } });
+        } else {
+            return new Response("Not found", { status: 404 });
+        }
+    }
+    
+    // API: return all users in JSON (for dropdowns etc.)
+    if (url.pathname === "/api/users" && req.method === "GET") {
+        if (!session) return new Response("Unauthorized", { status: 401 });
+        const users = await getAllUsers();
+        return new Response(JSON.stringify(users), { headers: { "Content-Type": "application/json" } });
+    }
+
+    // API: return session informations
+    if (url.pathname === "/api/session" && req.method === "GET") {
+        const cookies = req.headers.get("Cookie") || "";
+        const sessionId = getCookieValue(cookies, "session_id");
+    
+        if (!sessionId) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+    
+        const sessionData = await getSessionInfo(sessionId);
+        if (!sessionData) {
+            return new Response("Session not found", { status: 404 });
+        }
+    
+        return new Response(JSON.stringify(sessionData), { headers: { "Content-Type": "application/json" } });
+    }
+
+    // Fallback for unknown routes
     return new Response("Not Found", { status: 404 });
 }
 
-// Utility: Get content type for static files
+// Map file extension to Content-Type header
 function getContentType(filePath) {
     const ext = filePath.split(".").pop();
     const mimeTypes = {
@@ -162,12 +203,13 @@ function getContentType(filePath) {
     return mimeTypes[ext] || "application/octet-stream";
 }
 
-// Start the server with middleware
+// Entry point: wraps the handler with security headers
 async function mainHandler(req, info) {
     connectionInfo = info;
     return await addSecurityHeaders(req, handler);
 }
 
+// Start HTTP server on port 8000
 serve(mainHandler, { port: 8000 });
 
 // The Web app starts with the command:
