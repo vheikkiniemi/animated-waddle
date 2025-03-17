@@ -6,13 +6,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const userField = document.getElementById('reserver_token');
             if (selectedUserToken) {
-                // Dropdown tilanne (edit mode)
                 const response = await fetch('/api/users');
                 const users = await response.json();
                 const dropdown = document.createElement('select');
                 dropdown.name = "reserver_token";
                 dropdown.id = "reserver_token";
-
+                dropdown.classList.add('mt-1', 'block', 'w-full', 'px-3', 'py-2', 'border', 'border-gray-300', 'rounded-md', 'shadow-sm', 'focus:outline-none', 'focus:ring-indigo-500', 'focus:border-indigo-500', 'sm:text-sm');
                 users.forEach(user => {
                     const option = document.createElement('option');
                     option.value = user.user_token;
@@ -23,11 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     dropdown.appendChild(option);
                 });
 
-                // Korvaa nykyinen input dropdownilla
                 userField.replaceWith(dropdown);
 
             } else {
-                // Text input tilanne (create mode)
                 const response = await fetch('/api/session');
                 const session = await response.json();
                 userField.value = session.username;
@@ -38,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 1. Lataa kaikki resurssit dropdowniin
     async function loadResources(selectedResourceId = null) {
         try {
             const response = await fetch('/api/resources');
@@ -48,7 +44,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const option = document.createElement('option');
                 option.value = resource.resource_id;
                 option.textContent = `${resource.resource_name} (${resource.resource_description})`;
-                // Merkitään valituksi, jos reservationissa on resource_id valmiina
                 if (resource.resource_id == selectedResourceId) {
                     option.selected = true;
                 }
@@ -59,7 +54,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 2. Jos URL:ssa on id, lataa reservation tiedot
     if (id) {
         try {
             const response = await fetch(`/api/reservations/${id}`);
@@ -68,15 +62,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById('reservation_id').value = data.reservation_id;
             document.getElementById('reservation_start').value = data.reservation_start.substring(0, 16);
             document.getElementById('reservation_end').value = data.reservation_end.substring(0, 16);
-            // ladataan resurssit ja esivalitaan oikea resurssi
             await loadUsers(data.reserver_token);
             await loadResources(data.resource_id);
         } catch (err) {
             console.error('Error loading reservation data:', err);
-            await loadResources(); // fallback, lataa resurssit silti
+            await loadResources();
         }
     } else {
-        // Jos ei id:tä, pelkkä resurssien lataus
         await loadUsers();
         await loadResources();
     }

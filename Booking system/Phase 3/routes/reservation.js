@@ -1,4 +1,4 @@
-import { getSession } from "../sessionService.js"; // Session management
+import { getSession } from "./sessionService.js"; // Session management
 import client from "../db/db.js";
 
 // Get user UUID
@@ -58,44 +58,49 @@ export async function handleReservationForm(req) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Manage Reservations</title>
-        <link rel="stylesheet" href="/static/styles.css">
+        <link href="/static/tailwind.css" rel="stylesheet">
     </head>
-    <body>
-        <div class="container">
-            <h1>Create Reservation</h1>
-            <form action="/reservation" method="POST">
-
-                <!-- Reservation ID (hidden for new entries) -->
-                <div class="form-group">
+    <body class="bg-gray-100 text-gray-900">
+        <div class="container mx-auto p-4">
+            <div class="bg-white shadow-md rounded-lg p-6 max-w-xl mx-auto">
+                <h1 class="text-2xl font-bold mb-4 text-center">Create reservation</h1>
+                <form action="/reservation" method="POST">
+                    <!-- Reservation ID (hidden for new entries) -->
                     <input type="hidden" name="reservation_id" id="reservation_id">
-                </div>
 
-                <!-- Reserver username (pre-filled) -->
-                <div class="form-group">
-                    <label for="reserver_token">Reserver username:</label>
-                    <select name="reserver_token" id="reserver_token" required></select>
-                </div>
+                    <!-- Reserver username (pre-filled) -->
+                    <div class="mb-4">
+                        <label for="reserver_token" class="block text-sm font-medium text-gray-700 font-bold">Reserver username</label>
+                        <select name="reserver_token" id="reserver_token" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></select>
+                    </div>
 
-                <!-- Other form fields -->
-                <div class="form-group">
-                    <label for="resource_id">Resource:</label>
-                    <select name="resource_id" id="resource_id" required></select>
-                </div>
-                <div class="form-group">
-                    <label for="reservation_start">Reservation Start:</label>
-                    <input type="datetime-local" name="reservation_start" id="reservation_start" required>
-                </div>
-                <div class="form-group">
-                    <label for="reservation_end">Reservation End:</label>
-                    <input type="datetime-local" name="reservation_end" id="reservation_end" required>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Save Reservation</button>
-                </div>
-            </form>
+                    <!-- Resource ID -->
+                    <div class="mb-4">
+                        <label for="resource_id" class="block text-sm font-medium text-gray-700 font-bold">Resource</label>
+                        <select name="resource_id" id="resource_id" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></select>
+                    </div>
+
+                    <!-- Reservation Start -->
+                    <div class="mb-4">
+                        <label for="reservation_start" class="block text-sm font-medium text-gray-700 font-bold">Reservation start</label>
+                        <input type="datetime-local" name="reservation_start" id="reservation_start" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <!-- Reservation End -->
+                    <div class="mb-4">
+                        <label for="reservation_end" class="block text-sm font-medium text-gray-700 font-bold">Reservation end</label>
+                        <input type="datetime-local" name="reservation_end" id="reservation_end" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex justify-between space-x-4">
+                        <button type="submit" class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-1/2">Save reservation</button>
+                        <a href="/" class="inline-block bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 w-1/2 text-center">Cancel</a>
+                    </div>
+                </form>
+            </div>
         </div>
         <script src="/static/reservationsForm.js"></script>
-
     </body>
     </html>
     `;

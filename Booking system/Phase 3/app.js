@@ -5,8 +5,8 @@ import { getAllUsers } from "./routes/user.js";  // CRUD for users
 import { registerResource, getResources, getResourceById, updateResource } from "./routes/resource.js"; // CRUD for resources
 import { registerReservation, handleReservationForm, getReservationById, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
 import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
-import { getSession, destroySession, getCookieValue } from "./sessionService.js"; // Session management
-import { getSessionInfo } from "./routes/sessionService.js";
+//import { getSession, destroySession, getCookieValue } from "./sessionService.js"; // Session management
+import { getSessionInfo, getSession, destroySession, getCookieValue } from "./routes/sessionService.js"; // Session management
 
 let connectionInfo = {}; // Store connection details for logging purposes
 
@@ -175,6 +175,7 @@ async function handler(req) {
         }
     
         const sessionData = await getSessionInfo(sessionId);
+
         if (!sessionData) {
             return new Response("Session not found", { status: 404 });
         }

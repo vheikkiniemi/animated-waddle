@@ -1,7 +1,7 @@
 import client from "../db/db.js";
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { z } from "https://deno.land/x/zod@v3.16.1/mod.ts";
-import { createSession } from "../sessionService.js"; // Import session handling
+import { createSession } from "./sessionService.js"; // Import session handling
 
 // Define validation schema
 const loginSchema = z.object({
