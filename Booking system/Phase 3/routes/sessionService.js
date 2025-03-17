@@ -15,10 +15,13 @@ export async function createSession(user) {
     // Extracting username and role
     const { username, role } = user;
 
+    // Creating a csrf token
+    const csrfToken = crypto.randomUUID();
+
     // Insert the session record and retrieve the generated session_id
     const result = await client.queryArray(
-        "INSERT INTO zephyr_sessions (username, role, expires_at) VALUES ($1, $2, $3) RETURNING session_id",
-        [username, role, expiresAt]
+        "INSERT INTO zephyr_sessions (username, role, expires_at, csrf_token) VALUES ($1, $2, $3, $4) RETURNING session_id",
+        [username, role, expiresAt, csrfToken]
     );
 
     // Extract and return the session_id from the result
@@ -59,3 +62,31 @@ export async function destroySession(sessionId) {
 setInterval(async () => {
     await client.queryArray("DELETE FROM zephyr_sessions WHERE expires_at < NOW()");
 }, 60 * 60 * 1000); // Run every hour
+
+// Stores the CSRF token in the session database
+export async function saveCsrfTokenToSession(req, csrfToken) {
+    const cookies = req.headers.get("Cookie") || "";
+    const sessionId = getCookieValue(cookies, "session_id");
+
+    if (sessionId) {
+        await client.queryArray(
+            `UPDATE zephyr_sessions SET csrf_token = $1 WHERE session_id = $2`,
+            [csrfToken, sessionId]
+        );
+    }
+}
+
+// Retrieves CSRF token from session
+export async function getCsrfTokenFromSession(req) {
+    const cookies = req.headers.get("Cookie") || "";
+    const sessionId = getCookieValue(cookies, "session_id");
+
+    if (!sessionId) return null;
+
+    const result = await client.queryObject(
+        `SELECT csrf_token FROM zephyr_sessions WHERE session_id = $1`,
+        [sessionId]
+    );
+
+    return result.rows[0]?.csrf_token || null;
+}
