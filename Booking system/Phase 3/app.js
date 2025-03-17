@@ -56,7 +56,7 @@ async function handler(req) {
     // Handle user registration form submission
     if (url.pathname === "/register" && req.method === "POST") {
         const formData = await req.formData();
-        return await registerUser(formData);
+        return await registerUser(formData, connectionInfo);
     }
 
     // Serve login form
@@ -138,7 +138,6 @@ async function handler(req) {
             return new Response("Unauthorized", { status: 401 });
         }
         const formData = await req.formData();
-        console.log(formData);
         if (formData.get("reservation_id")) {
             return await updateReservation(formData);
         } else {

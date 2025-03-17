@@ -16,7 +16,7 @@ const htmlHeader = `<!DOCTYPE html>
 const htmlMiddle = `</div>
                     <!-- Booked Resources Box -->
                     <div class="bg-white shadow-md rounded-lg p-6 mb-6 max-w-5xl mx-auto">
-                    <h1 class="text-2xl font-bold mb-4">Booked Resources</h1>
+                    <h1 class="text-2xl font-bold mb-4">Booked resources</h1>
                     <div class="overflow-x-auto">`;
 const htmlBottom = `</tbody></table></div></div></div></body></html>`;
 
@@ -82,11 +82,6 @@ async function getReservationsWithUser(role,username) {
             }
 
         }
-
-
-
-
-
         return tableRows;
     } catch (error) {
         console.error("Error fetching booked resources:", error);
@@ -101,7 +96,7 @@ export async function handleIndex(req) {
     // Default HTML response
     let loggedHtml = "";
     loggedHtml += htmlHeader;
-    loggedHtml += `<h1 class="text-2xl font-bold mb-4">Welcome to the Booking System ${session.username}</h1><h2 class="text-xl font-bold mb-4">Your role is ${session.role}</h2>`;
+    loggedHtml += `<h1 class="text-2xl font-bold mb-4">Welcome to the Booking system ${session.username}</h1><h2 class="text-xl font-bold mb-4">Your role is ${session.role}</h2>`;
     loggedHtml += `<p class="mb-4">Please choose one of the options below:</p>
                    <div class="flex justify-between space-x-4">
                         <a href="/resources" class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-1/3">Add a new resource</a>
@@ -133,7 +128,7 @@ export async function handleDefaultIndex(req) {
     // Default HTML response
     let defaultHtml = "";
     defaultHtml += htmlHeader;
-    defaultHtml += `<h1 class="text-2xl font-bold mb-4">Welcome to the Booking System</h1>`;
+    defaultHtml += `<h1 class="text-2xl font-bold mb-4">Welcome to the Booking system</h1>`;
     defaultHtml += `<p class="mb-4">Please choose one of the options below:</p>
                     <div class="flex justify-between space-x-4">
                         <a href="/login" class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-1/2">Login</a>

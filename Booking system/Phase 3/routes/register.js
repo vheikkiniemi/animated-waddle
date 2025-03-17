@@ -25,8 +25,20 @@ async function isUniqueUsername(email) {
     return result.rows.length === 0;
 }
 
+// Log successful resigister attempts
+async function logRegistering(userUUID, ipAddress) {
+    try {
+        await client.queryArray(
+            `INSERT INTO zephyr_login_logs (user_token, ip_address) VALUES ($1, $2)`,
+            [userUUID, ipAddress]
+        );
+    } catch (error) {
+        console.error("Error logging login event:", error);
+    }
+}
+
 // Register user
-export async function registerUser(c) {
+export async function registerUser(c, info) {
     const username = c.get('username');
     const password = c.get('password');
     const birthdate = c.get('birthdate');
@@ -46,10 +58,15 @@ export async function registerUser(c) {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // Insert user into database
-        await client.queryArray(
-            `INSERT INTO zephyr_users (username, password_hash, role, birthdate) VALUES ($1, $2, $3, $4)`,
+        const result = await client.queryObject(
+            `INSERT INTO zephyr_users (username, password_hash, role, birthdate) VALUES ($1, $2, $3, $4) RETURNING user_token`,
             [username, hashedPassword, role, birthdate]
         );
+        const newUser = result.rows[0];
+
+        // Log successful registering
+        const ipAddress = info.remoteAddr.hostname;
+        await logRegistering(newUser.user_token, ipAddress);
 
         // Create session after successful registration
         const sessionId = await createSession({ username, role });
