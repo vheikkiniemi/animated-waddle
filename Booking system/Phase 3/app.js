@@ -97,8 +97,10 @@ async function handler(req) {
     if (url.pathname === "/login" && req.method === "POST") {
         // Enabling CSRF protection
         const formData = await req.formData();
+        console.log(formData);
         const tokenFromForm = formData.get("csrf_token");
         const cookies = req.headers.get("Cookie") || "";
+        console.log(cookies);
         const tokenFromCookie = getCookieValue(cookies, "csrf_token");
         // CSRF check
         if (!tokenFromForm || !tokenFromCookie || tokenFromForm !== tokenFromCookie) {
@@ -125,14 +127,16 @@ async function handler(req) {
 
     // Serve resource management form
     if (url.pathname === "/resources" && req.method === "GET") {
-        if (!session) return new Response("Unauthorized", { status: 401 });
+        // Just for testing!!!
+        //if (!session) return new Response("Unauthorized", { status: 401 });
         const id = url.searchParams.get("id");
         return await serveStaticFile("./views/resource.html", "text/html");
     }
 
     // Handle resource creation or update
     if (url.pathname === "/resources" && req.method === "POST") {
-        if (!session) return new Response("Unauthorized", { status: 401 });
+        // Just for testing!!!
+        //if (!session) return new Response("Unauthorized", { status: 401 });
         const formData = await req.formData();
         if (formData.get("resource_id")) {
             return await updateResource(formData);

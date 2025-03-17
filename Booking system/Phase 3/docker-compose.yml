@@ -1,6 +1,6 @@
 services:
   database:
-    image: vheikkiniemi/cybersec-db-phase3:v1.0
+    image: vheikkiniemi/cybersec-db-phase3:v1.1
     restart: always
     container_name: cybersec-db-phase3
     environment:
