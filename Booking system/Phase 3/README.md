@@ -20,34 +20,121 @@
 ✅ The client, your company, requires that the system complies with GDPR regulations.  
 ✅ The system provider has stated that the software is developed following the Privacy by Design (PbD) principle.  
 
-## Testing authorizaion
-
 **In the previous phase, the theme was authentication. In this phase, we focus on authorization, which is what typically happens after authentication.**
 
-## Pages
-1. http://localhost:8000/register
-2. http://localhost:8000/login
-3. http://localhost:8000/logout
-4. http://localhost:8000/resources
-5. http://localhost:8000/reservation
-6. http://localhost:8000/resourcesList
+# Web Page Structures and Functionalities for Authorization Testing
+
+## 🧩 1. Web Page Structure
+
+A web application is typically divided into **URLs** (routes) and **HTTP methods** that define how users interact with the application.
+
+### Common structure:
+- **Public pages** (accessible without login)
+  - `/`
+  - `/login`
+  - `/register`
+- **Protected pages** (require authentication)
+  - `/resources`
+  - `/reservation`
+  - `/profile`
+- **Admin/privileged pages**
+  - `/admin/users`
+  - `/admin/settings`
+
+---
+
+## 🛠 2. Typical Functionalities to Test
+
+| **Type**              | **Examples**                                 |
+|-----------------------|----------------------------------------------|
+| View content          | Dashboard, listings, read-only pages         |
+| Form submissions      | Login, registration, create/edit resources   |
+| Data modification     | Edit profiles, create reservations, delete   |
+| Privileged actions    | User management, access control, settings    |
+| API calls             | `/api/*` endpoints for frontend/backend      |
+
+---
+
+## 🔐 3. What to Focus on in Authorization Testing
+
+### ✅ **Access Control Rules**
+- Can **unauthenticated users** (Guests) access protected pages?
+- Can **Reserver** role access Admin-only functions?
+- Are **API endpoints** enforcing role-based restrictions?
+
+### ✅ **Horizontal Privilege Escalation**
+- Can user A access or modify data of user B?
+  - e.g., `/api/reservations/1` or `/profile?id=5`
+
+### ✅ **Vertical Privilege Escalation**
+- Can a low-privilege user (e.g., Reserver) perform Admin actions?
+  - Submit forms to `/admin` routes
+  - Modify user roles via hidden parameters
+
+---
+
+## 🔍 4. Testing Approach
+
+1. **Map pages & APIs**
+   - Use tools like **wfuzz**, **ffuf**, or **dirb** to discover hidden paths.
+   - Map both **GET** and **POST** endpoints.
+
+2. **Test as different roles**
+   - Guest (unauthenticated)
+   - Authenticated user (e.g., Reserver)
+   - Administrator
+
+3. **Inspect functions on each page**
+   - Buttons, forms, APIs, links
+   - Backend-side restrictions (not just hidden in UI)
+
+---
+
+## 🎯 5. Goal of Authorization Testing
+
+- Ensure **least privilege** principle (users can only do what they should).
+- Detect **bypass vectors** (direct object references, hidden APIs).
+- Confirm both **frontend** and **backend** enforce authorization properly.
+
+---
+
+> Tip: Combine **manual testing** and **automated fuzzing** for maximum coverage!
 
 
-| **Page / Feature** | **Guest** | **Reserver** | **Administrator** |
-|:----|:----:|:----:|:----:|
-| `/` (index)                | | | |
-| └─ View resource form      | ❌ | ✅ | ✅ |
-| └─ Create new resource     | ❌ | ❌ | ✅ |
-| └─ Edit existing resource  | ❌ | ❌ | ✅ |
-| └─ Delete resource         | ❌ | ❌ | ✅ |
+# Authorization testing steps for this assignment
+
+1. **Make sure you have the latest version from the application**
+   - Check: The application to docker - Client side ▶️  All in
+
+---
+
+2. **Create a new page on Github (markdown) and add the following table to the page**
+
+    | **Page / Feature** | **Guest** | **Reserver** | **Administrator** |
+    |:----|:----:|:----:|:----:|
+    | `/` (index)                | | | |
+    | └─ View resource form      | ❌ | ✅ | ✅ note added |
+    | └─ Create new resource     | ❌ | ❌ | ✅ |
+
+    **Symbols used:**  
+    ✅ Pass (a note can be added)  
+    ❌ Fail (a note can be added)  
+    ⚠️ Attention (a note can be added)
+
+---
+
+3.
+
+wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/FUZZ
+wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/api/FUZZ
+wfuzz -c -z range,1-1000 --hc 404 http://localhost:8000/api/reservations/FUZZ
+http http://localhost:8000/api/reservations/1  
 
 
 
-✅ Pass
-❌ Fail
-⚠️ Attention
 
-## Client side
+
+## The application to docker - Client side
 
 ### Database
 
@@ -72,7 +159,7 @@
 4. If you want to stop all, try: `docker compose stop`
 5. If you want to delete all, try: `docker compose down --volumes`
 
-## Dev side (teacher's notes)
+## The application to docker - Dev side (teacher's notes)
 
 ### Database
 
@@ -112,3 +199,7 @@
 ### Volumes
 - `docker volume ls`
 - `docker volume rm <volume_name>`
+
+
+> [!NOTE]  
+> [symbols](https://github.com/ikatyang/emoji-cheat-sheet)

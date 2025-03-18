@@ -1,6 +1,0 @@
-Dockerfile
-docker-compose-dev.yml
-database/
-.env
-secret*
-db/init.sql
