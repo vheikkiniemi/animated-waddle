@@ -103,34 +103,58 @@ A web application is typically divided into **URLs** (routes) and **HTTP methods
 
 # Authorization testing steps for this assignment
 
-1. **Make sure you have the latest version from the application**
-   - Check: The application to docker - Client side ▶️  All in
+**1. Make sure you have the latest version from the application**
+- Check: The application to docker - Client side ▶️  All in
 
 ---
 
-2. **Create a new page on Github (markdown) and add the following table to the page**
+**2. Create a new page on Github (markdown) and add the following table to the page**
 
-    | **Page / Feature** | **Guest** | **Reserver** | **Administrator** |
-    |:----|:----:|:----:|:----:|
-    | `/` (index)                | | | |
-    | └─ View resource form      | ❌ | ✅ | ✅ note added |
-    | └─ Create new resource     | ❌ | ❌ | ✅ |
+| **Page / Feature** | **Guest** | **Reserver** | **Administrator** |
+|:----|:----:|:----:|:----:|
+| `/` (index)                | | | |
+| └─ View resource form      | ❌ | ✅ | ✅ note added |
+| └─ Create new resource     | ❌ | ❌ | ✅ |
 
-    **Symbols used:**  
-    ✅ Pass (a note can be added)  
-    ❌ Fail (a note can be added)  
-    ⚠️ Attention (a note can be added)
+**Symbols used:**  
+✅ Pass (a note can be added)  
+❌ Fail (a note can be added)  
+⚠️ Attention (a note can be added)
+
+**At this point, you need a table as a template. You will add content during the test.**
 
 ---
 
-3.
+**3. First testing technique: Browser**
+- Familiarize yourself with the functionality of the version as comprehensively as possible.
+  - create users with different roles
+  - make reserveable resources
+  - make reservations
+  - ...
+- Fill in the table as the testing progresses.
 
+---
+
+**4. Second testing technique: ZAP**
+- Check what kind of alerts are found in the version
+
+**5. Third testing technique: wfuzz**
+
+
+```bash
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/FUZZ
+```
+
+```bash
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/api/FUZZ
+```
+
+```bash
 wfuzz -c -z range,1-1000 --hc 404 http://localhost:8000/api/reservations/FUZZ
 http http://localhost:8000/api/reservations/1  
+```
 
-
+6. **Third testing technique: wfuzz**
 
 
 
