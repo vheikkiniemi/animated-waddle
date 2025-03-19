@@ -105,7 +105,7 @@ A web application is typically divided into **URLs** (routes) and **HTTP methods
 # Authorization testing steps for this assignment
 
 **1. Make sure you have the latest version from the application**
-- Check: The application to docker - Client side ▶️  All in
+- Check:  [The application to docker - Client side](#the-application-to-docker---client-side)
 
 ---
 
