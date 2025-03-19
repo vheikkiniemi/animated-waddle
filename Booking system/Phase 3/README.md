@@ -205,6 +205,8 @@ http http://localhost:8000/api/reservations/1
 
 ---
 
+# Application deployment
+
 ## The application to docker - Client side
 
 **1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)**  
