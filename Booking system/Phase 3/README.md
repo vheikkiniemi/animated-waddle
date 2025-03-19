@@ -7,18 +7,18 @@
 > [!NOTE]  
 > As a reminder
 
-**You are a novice penetration tester at a company. Your company has commissioned the following software:**  
+**You are a novice penetration tester at a company. Your company should implement the following application (specs):**  
 
-✅ The system is accessed via a web browser.  
-✅ Users can register and, after registration, log in to the system.  
-✅ A registered and logged-in user acts as either a resource reserver or an administrator.  
-✅ The administrator can add, remove, and modify resources and reservations.  
-✅ The administrator can delete the reserver.  
-✅ A reserver can book a resource if they are over 15 years old.  
-✅ Resources can be booked on an hourly basis.  
-✅ The booking system displays booked resources without requiring login, but does not show the reserver's identity  
-✅ The client, your company, requires that the system complies with GDPR regulations.  
-✅ The system provider has stated that the software is developed following the Privacy by Design (PbD) principle.  
+1. The system is accessed via a web browser.  
+2. Users can register and, after registration, log in to the system.  
+3. A registered and logged-in user acts as either a resource reserver or an administrator.  
+4. The administrator can add, remove, and modify resources and reservations.  
+5. The administrator can delete the reserver.  
+6. A reserver can book a resource if they are over 15 years old.  
+7. Resources can be booked on an hourly basis.  
+8. The booking system displays booked resources without requiring login, but does not show the reserver's identity  
+9. The client, your company, requires that the system complies with GDPR regulations.  
+10. The system provider has stated that the software is developed following the Privacy by Design (PbD) principle.  
 
 **In the previous phase, the theme was authentication. In this phase, we focus on authorization, which is what typically happens after authentication.**
 
@@ -114,12 +114,17 @@ A web application is typically divided into **URLs** (routes) and **HTTP methods
 |:----|:----:|:----:|:----:|
 | `/` (index)                | | | |
 | └─ View resource form      | ❌ | ✅ | ✅ note added |
-| └─ Create new resource     | ❌ | ❌ | ✅ |
+| └─ Create new resource     | ❌ *1 | ❌ *2 | ✅ *3 |
 
 **Symbols used:**  
 ✅ Pass (a note can be added)  
 ❌ Fail (a note can be added)  
 ⚠️ Attention (a note can be added)
+
+**You can also make notes like this:**  
+1. Add some note to this.
+2. Add some note to this.
+3. Add some note to this.
 
 **At this point, you need a table as a template. You will add content during the test.**
 
@@ -131,57 +136,83 @@ A web application is typically divided into **URLs** (routes) and **HTTP methods
   - make reserveable resources
   - make reservations
   - ...
-- Fill in the table as the testing progresses.
+- **Fill in the table as the testing progresses.**
 
 ---
 
 **4. Second testing technique: ZAP**
-- Check what kind of alerts are found in the version
+- Check what kind of alerts are found in the version.
 
-**5. Third testing technique: wfuzz**
+> [!NOTE]  
+> Do a broader test because there are now more pages. 
+> Make sure all pages are tested.
+> **Check How-to video**
 
+- **Save the ZAP report in markdown format.**
+- **Fill in the table as the testing progresses.**
+  - The test can find new pages, for example
 
+---
+
+**5. Third testing technique: wfuzz and http**
+- Try to find new pages using wfuzz and http commands.
+- **Fill in the table as the testing progresses.**
+- You can use, for example, the following commands:
+
+**What kind of pages can be found using common words?**
 ```bash
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/FUZZ
 ```
 
+**Is there an API folder and pages under it?**
 ```bash
 wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/api/FUZZ
 ```
 
+**Are there any pages in the reservations folder whose name is a number between 1-1000?**
 ```bash
 wfuzz -c -z range,1-1000 --hc 404 http://localhost:8000/api/reservations/FUZZ
+```
+
+**When the page is found, then what the page contains?**
+```bash
 http http://localhost:8000/api/reservations/1  
 ```
 
-6. **Third testing technique: wfuzz**
+---
 
+**OPTIONAL technique: Manual code review**
+- You can find the application code in this same git repo.
+- Review the code.
+- **Fill in the table as the testing progresses.**
 
+---
+
+**6. The final step of the test**  
+
+✔️ At this point you should have a comprehensive list of available pages.  
+✔️ The first column of the table should contain **all the pages** found.  
+✔️ In addition, the pages should already have **functions connected to them.**  
+✔️ Functions should be linked to **roles.**  
+✔️ Following an iterative approach **repeat browser testing.**
+
+**`1. Go through the application and compare the functions with the table`**  
+**`2. If something needs to be changed in the table, change it.`**
+
+🎯 **Now you should have a table that shows what resources (pages) and functions are in the application and who can use them.**
+✅ **Add to the table as a note which application specs are met (especially items 1-8).**
+
+---
 
 ## The application to docker - Client side
 
-### Database
+**1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)**  
+**2. Try to build and run: `docker compose up --build -d`**  
+**3. If something doesn't work, try: `docker compose logs`**  
+**4. If you want to stop all, try: `docker compose stop`**  
+**5. If you want to delete all, try: `docker compose down --volumes`**
 
-1. Download the file from: [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)
-2. Try to build and run the database: `docker compose -f 'docker-compose.yml' up -d --build 'database'`
-3. Try to check the table structure: `docker exec -it cybersec-db-phase3 psql -U postgres -d postgres`
-4. If something doesn't work, try: `docker compose logs`
-5. If you want to delete the database `docker compose -f 'docker-compose.yml' down 'database' --volumes`
-
-### Web
-
-1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)
-2. Try to build and run the web interface: `docker compose -f 'docker-compose.yml' up -d --build 'web'`
-3. If something doesn't work, try: `docker compose logs`
-4. If you want to delete the web interface: `docker compose -f 'docker-compose.yml' down 'web' --volumes`
-
-### All in
-
-1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)
-2. Try to build and run: `docker compose up --build -d`
-3. If something doesn't work, try: `docker compose logs`
-4. If you want to stop all, try: `docker compose stop`
-5. If you want to delete all, try: `docker compose down --volumes`
+---
 
 ## The application to docker - Dev side (teacher's notes)
 
