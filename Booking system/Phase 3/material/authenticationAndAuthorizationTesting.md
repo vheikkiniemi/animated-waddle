@@ -1,5 +1,8 @@
 # 🔐 Security Testing Cheat Sheet (Authn & Authz)
 
+> [!NOTE]
+> The material was created using the ChatGPT and CoPilot AI applications.
+
 ## 🔵 General Terms
 
 | **Term**         | **Description**                                           |
