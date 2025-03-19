@@ -1,7 +1,7 @@
 # The Booking system - Phase 3
 
 > [!NOTE]
-> The material was created using the ChatGPT and CoPilot AI applications.
+> The material was created with the help of ChatGPT and Copilot.
 
 ## Initial scenario
 

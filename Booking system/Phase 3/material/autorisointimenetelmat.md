@@ -1,5 +1,5 @@
 > [!NOTE]
-> Materiaalin laadinnassa hyödynnetty ChatGPT- ja Copilot-tekoälysovellusta
+> Materiaali on luotu ChatGPT:n ja Copilotin avustuksella.
 
 # **Autorisointi web-ympäristöissä**
 
