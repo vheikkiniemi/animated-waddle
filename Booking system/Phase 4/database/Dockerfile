@@ -13,5 +13,4 @@ COPY ./init.sql /docker-entrypoint-initdb.d/
 EXPOSE 5432
 
 # Building and pushing example
-# docker build -t vheikkiniemi/cybersec-db-phase1-ver2 .
-# docker push vheikkiniemi/cybersec-db-phase1-ver2
+# docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-db-phase4:v1.0 --push .
