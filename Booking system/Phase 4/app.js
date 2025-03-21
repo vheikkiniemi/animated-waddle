@@ -3,7 +3,7 @@ import { registerUser } from "./routes/register.js"; // Handles user registratio
 import { loginUser } from "./routes/login.js"; // Handles user login logic
 import { getAllUsers, getAccountInfo } from "./routes/user.js";  // CRUD for users
 import { registerResource, getResources, getResourceById, updateResource } from "./routes/resource.js"; // CRUD for resources
-import { registerReservation, handleReservationForm, getReservationById, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
+import { registerReservation, handleReservationForm, getReservationById, getReservations, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
 import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
 import { getSessionInfo, getSession, destroySession, getCookieValue, saveCsrfTokenToSession, getCsrfTokenFromSession } from "./routes/sessionService.js"; // Session management
 
@@ -44,12 +44,11 @@ async function handler(req) {
 
     // Render index page depending on session
     if (url.pathname === "/" && req.method === "GET") {
-        return session ? await handleIndex(req) : await handleDefaultIndex(req);
+        return await serveStaticFile("./views/index.html", "text/html");
     }
 
     // Serve registration form
     if (url.pathname === "/register" && req.method === "GET") {
-        //return await serveStaticFile("./views/register.html", "text/html");
         // Enabling CSRF protection
         const rawHtml = await Deno.readTextFile("./views/register.html");
         // registering GET handler
@@ -58,7 +57,7 @@ async function handler(req) {
         return new Response(htmlWithToken, {
             headers: {
                 "Content-Type": "text/html",
-                "Set-Cookie": `csrf_token=${csrfToken}; HttpOnly; SameSite=Strict; Path=/; Secure`
+                "Set-Cookie": `csrf_token=${csrfToken}; HttpOnly; SameSite=Strict; Path=/; Secure; Max-Age=604800`
             }
         });
     }
@@ -88,7 +87,7 @@ async function handler(req) {
         return new Response(htmlWithToken, {
             headers: {
                 "Content-Type": "text/html",
-                "Set-Cookie": `csrf_token=${csrfToken}; HttpOnly; SameSite=Strict; Path=/; Secure`
+                "Set-Cookie": `csrf_token=${csrfToken}; HttpOnly; SameSite=Strict; Path=/; Secure; Max-Age=604800`
             }
         });
     }
@@ -157,8 +156,7 @@ async function handler(req) {
 
     // API: return all resources in JSON (for dropdowns etc.)
     if (url.pathname === "/api/resources" && req.method === "GET") {
-        // Just for testing!!!
-        // if (!session) { return new Response("Unauthorized", { status: 401 }); }
+        if (!session) { return new Response("Unauthorized", { status: 401 }); }
         return await getResources();
     }
 
@@ -181,10 +179,14 @@ async function handler(req) {
         }
     }
 
+    // API: return all resources in JSON (for dropdowns etc.)
+    if (url.pathname === "/api/reservations" && req.method === "GET") {
+        return await getReservations(req);
+    }
+
     // API: return single resource details by ID (AJAX calls)
     if (url.pathname.startsWith("/api/reservations/") && req.method === "GET") {
-        // Just for testing!!!
-        //if (!session) return new Response("Unauthorized", { status: 401 });
+        if (!session) return new Response("Unauthorized", { status: 401 });
         const id = url.pathname.split("/").pop();
         const reservation = await getReservationById(id);
         if (reservation) {
@@ -194,8 +196,7 @@ async function handler(req) {
 
     // API: return all users in JSON (for dropdowns etc.)
     if (url.pathname === "/api/users" && req.method === "GET") {
-        // Just for testing!!!
-        //if (!session) return new Response("Unauthorized", { status: 401 });
+        if (!session) return new Response("Unauthorized", { status: 401 });
         const users = await getAllUsers();
         return new Response(JSON.stringify(users), { headers: { "Content-Type": "application/json" } });
     }
@@ -215,9 +216,14 @@ async function handler(req) {
         return await serveStaticFile("./views/terms.html", "text/html");
     }
 
-    // Serve  Privacy notice page
-    if (url.pathname === "/privacynotice" && req.method === "GET") {
-        return await serveStaticFile("./views/privacynotice.html", "text/html");
+    // Serve Privacy policy page
+    if (url.pathname === "/privacypolicy" && req.method === "GET") {
+        return await serveStaticFile("./views/privacypolicy.html", "text/html");
+    }
+
+    // Serve Cookie policy page
+    if (url.pathname === "/cookiepolicy" && req.method === "GET") {
+        return await serveStaticFile("./views/cookiepolicy.html", "text/html");
     }
 
     // Serve  Account page

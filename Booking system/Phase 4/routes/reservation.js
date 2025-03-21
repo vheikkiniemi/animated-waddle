@@ -7,6 +7,46 @@ async function getUserUUID(username) {
     return result.rows.length > 0 ? result.rows[0] : null;
 }
 
+export async function getReservations(req) {
+    const session = await getSession(req);
+    let query = "";
+    if (!session) {
+        query = `
+        SELECT
+            res.reservation_id,
+            r.resource_id,
+            r.resource_name,
+            res.reservation_start,
+            res.reservation_end
+        FROM zephyr_resources r
+        JOIN zephyr_reservations res ON r.resource_id = res.resource_id;
+        `;
+    } else {
+        query = `
+        SELECT
+            res.reservation_id,
+            r.resource_id,
+            r.resource_name,
+            res.reservation_start,
+            res.reservation_end,
+            u.username AS reserver_username
+        FROM zephyr_resources r
+        JOIN zephyr_reservations res ON r.resource_id = res.resource_id
+        JOIN zephyr_users u ON res.reserver_token = u.user_token;
+        `;
+    }
+
+    try {
+        const result = await client.queryObject(query);
+        return new Response(JSON.stringify(result.rows), {
+            headers: { "Content-Type": "application/json" },
+        });
+    } catch (error) {
+        console.error('Error fetching resources:', error);
+        return new Response("Internal Server Error", { status: 500 });
+    }
+}
+
 export async function registerReservation(req) {
     const reserverUsername = req.get("reserver_token");
     const resourceId = req.get("resource_id");
