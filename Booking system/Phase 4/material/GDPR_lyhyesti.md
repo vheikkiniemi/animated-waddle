@@ -1,4 +1,4 @@
-# Henkilötieto ja GDPR
+# GDPR:n perusteet
 
 ## Henkilötieto
 
@@ -42,7 +42,7 @@
 
 ---
 
-## Yksinkertaisen opettajan yksinkertaistus - Osa 1
+## Yhteenveto – osa 1
 
 Muodostamme henkilörekisterin aina kun tallennamme pysyvästi jotain, joka voidaan yhdistää henkilöön.
 
@@ -127,19 +127,13 @@ Kun henkilötietojen käsittely on sopimuksen täytäntöönpanoa varten:
 **Ei**, käyttäjän on hyväksyttävä käyttöehdot.
 
 ### Käytännön periaatteet:
-
-1. **Selkeä hyväksymistoimi**
-   - Rastitus tai painikkeen klikkaus.
-
-2. **Ehtojen saavutettavuus**
-   - Käyttöehdot ja tietosuojaseloste esille ennen rekisteröitymistä.
-
-3. **Hyväksymisen dokumentointi**
-   - Kirjaa järjestelmään hyväksyntä.
+1. **Selkeä hyväksymistoimi**: Rastitus tai painikkeen klikkaus.
+2. **Ehtojen saavutettavuus**: Käyttöehdot ja tietosuojaseloste esille ennen rekisteröitymistä.
+3. **Hyväksymisen dokumentointi**: Kirjaa järjestelmään hyväksyntä.
 
 ---
 
-## Yksinkertaisen opettajan yksinkertaistus - Osa 2
+## Yhteenveto - Osa 2
 
 - **Tietosuojaseloste**: Laadi aina.
 - **Suostumus**: Vapaaehtoinen ja tarpeen analytiikkaan, markkinointiin ym.

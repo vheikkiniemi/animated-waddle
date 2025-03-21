@@ -1,4 +1,4 @@
-# GDPR
+# Basics of GDPR
 
 ## Personal data
 
@@ -42,7 +42,7 @@
 
 ---
 
-## A simple teacher's simplification - Part 1
+## Summary - Part 1
 
 We create a register of personal data whenever we permanently store information that can be linked to an individual.
 
@@ -79,9 +79,10 @@ The data subject can give consent:
 [Consent of the data subject](https://tietosuoja.fi/en/consent-of-the-data-subject)
 
 ### For consent to be valid:
+- Personalized
 - Informed
-- Freely given
-- Unambiguous indication
+- Genuinely voluntary
+- Unambiguous expression of will
 
 ---
 
@@ -91,6 +92,7 @@ The data subject can give consent:
 - **Consent**: Must refer to processing outlined in the Privacy Notice.
 
 ### Differences:
+
 **Privacy Notice**
 - Explains how personal data is processed.
 - Required by GDPR.
@@ -131,13 +133,11 @@ When processing is necessary for a contract:
 
 ---
 
-## A simple teacher's simplification - Part 2
+## Summary - Part 2
 
 - **Privacy Notice**: Always create one.
 - **Consent**: Needed for analytics, marketing, non-essential.
 - **Agreement**: Required to use the service.
-
----
 
 ## Example prompts:
 - What do I need to do regarding GDPR if my booking system stores email addresses?
