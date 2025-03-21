@@ -105,7 +105,7 @@ A web application is typically divided into **URLs** (routes) and **HTTP methods
 # Authorization testing steps for this assignment
 
 **1. Make sure you have the latest version from the application**
-- It is recommended [that Kali](https://www.kali.org/) is installed as a virtual machine.
+- It is recommended that [Kali](https://www.kali.org/) is installed as a virtual machine.
 - Check:  [The application to docker - Client side](#the-application-to-docker---client-side)
 
 ---
