@@ -4,7 +4,7 @@ import { loginUser } from "./routes/login.js"; // Handles user login logic
 import { getAllUsers, getAccountInfo } from "./routes/user.js";  // CRUD for users
 import { registerResource, getResources, getResourceById, updateResource } from "./routes/resource.js"; // CRUD for resources
 import { registerReservation, handleReservationForm, getReservationById, getReservations, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
-import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
+//import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
 import { getSessionInfo, getSession, destroySession, getCookieValue, saveCsrfTokenToSession, getCsrfTokenFromSession } from "./routes/sessionService.js"; // Session management
 
 let connectionInfo = {}; // Store connection details for logging purposes
