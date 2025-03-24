@@ -4,8 +4,7 @@ import { Client } from "https://deno.land/x/postgres/mod.ts";
 const DATABASE_CONFIG = {
     user: "postgres",
     database: "postgres",
-    //hostname: "host.docker.internal", // Change to "postgres" if using Docker Compose
-    hostname: "192.168.1.203",
+    hostname: "host.docker.internal", // Change to "postgres" if using Docker Compose
     password: "Secret1234!",
     port: 5432,
 };
