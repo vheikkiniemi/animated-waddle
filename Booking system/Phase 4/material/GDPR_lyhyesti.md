@@ -14,6 +14,7 @@
 🎯 **[Henkilötietojen käsittely (tietosuoja.fi)](https://tietosuoja.fi/henkilotietojen-kasittely)**  
 🔑 *Avainsanat: Rekisterinpitäjä, Henkilötietojen käsittelijä*  
 
+---
 
 ### Henkilötietojen käsittely
 
@@ -27,6 +28,8 @@
 🔗 [Tietojen täsmällisyys](https://tietosuoja.fi/tietojen-tasmallisyys)  
 🔗 [Säilytyksen rajoittaminen](https://tietosuoja.fi/sailytyksen-rajoittaminen)  
 🔗 [Luottamuksellisuus ja turvallisuus](https://tietosuoja.fi/luottamuksellisuus-ja-turvallisuus)  
+
+---
 
 ### Yhteenveto henkilötiedoista ja -tietojen käsittelystä
 
@@ -73,6 +76,8 @@
 ✅ **Tietosuojaseloste**: Tarjoaa tiedot läpinäkyvyyden ja vastuullisuuden varmistamiseksi.  
 ✅ **Suostumus (jos käytetään)**: Dokumentoitava ja viitattava tietosuojaselosteessa mainittuihin käsittelytoimiin.
 
+---
+
 ### Erot suostumuksen ja tietosuojaselosteen välillä (Lähde: ChatGPT)
 
 **Tietosuojaseloste**  
@@ -84,6 +89,8 @@
 ✅ Aktiivinen toiminto, jossa käyttäjä antaa nimenomaisen luvan tietojensa käsittelyyn tietyissä tarkoituksissa, esimerkiksi markkinointia varten.  
 ✅ Perustuu GDPR:n artiklaan 6(1)(a).  
 ☝️ **Vaatii, että käyttäjä antaa suostumuksensa** vapaaehtoisesti ja yksiselitteisesti (esim. rastittamalla ruudun).
+
+---
 
 ### Yhteenveto – Tarvitsenko? (Lähde: ChatGPT)
 
@@ -105,6 +112,8 @@ Tietosuoja-asetuksessa on kuusi eri perustetta, joilla henkilötietojen käsitte
 ✖️ Sopimus
 
 Kun rekisteröity on osapuolena sopimuksessa, hänen henkilötietojaan saa käsitellä sopimuksen täytäntöön panemiseksi 👉 [Sopimus (tietosuoja.fi)](https://tietosuoja.fi/kasittelyperusteet#sopimus)
+
+---
 
 ### Esimerkkikysymyksiä
 
@@ -153,27 +162,26 @@ Käyttäjän rekisteröityessä tulee varmistaa, että:
 Hyväksyminen dokumentoidaan järjestelmään.
 3. Tämä tapa varmistaa, että palvelusopimus syntyy laillisesti ja täyttää sekä GDPR:n että sopimusoikeuden vaatimukset.
 
-❓Kokeile: Avaa selaimella seuraavat linkit (toiminta testattu 24.3.2024)
+❓**Kokeile:** Avaa selaimella seuraavat linkit (toiminta testattu 24.3.2024)
 - Finnish 👉 [Yle Tunnus käyttöehdot](https://yle.fi/aihe/a/20-213259)
 - Finnish 👉 [Henkilökohtaisen Yle Tunnus -palvelun kuvaus](https://yle.fi/aihe/a/20-10005896)
 - English 👉 [Yle ID Terms of service](https://yle.fi/aihe/a/20-10001427)
 
 ---
 
-## Yhteenveto (tietosuojaseloste, suostumus, sopimus)
+## Yhteenveto ➡️ Tietosuojaseloste, suostumus ja sopimus
 
 **`Tietosuojaseloste`**  
-
 🔎 Perussääntönä, että luodaan **aina**.
 
-**`Suostumus`**
+**`Suostumus`**  
+🔎 **Kyllä**, jos tietoja käytetään analytiikkaan, markkinointiin tai muihin ei-välttämättömiin tarkoituksiin.  
+🔎 **Vapaaehtoinen**. Pitää pystyä käyttämään palvelua myös ilman.
 
-🔎**Kyllä**, jos tietoja käytetään analytiikkaan, markkinointiin tai muihin ei-välttämättömiin tarkoituksiin.  
-🔎**Vapaaehtoinen**. Pitää pystyä käyttämään palvelua myös ilman.
-
-**`Sopimus`**
-
+**`Sopimus`**  
 🔎 Vaaditaan **hyväksyntä**, jotta palvelua saa käyttää. 
+
+---
 
 ❓**Kokeile: Anna AI-työkalulle (esim. Copilot, ChatGPT) seuraavia prompteja**  
 - Minulla on varausjärjestelmä, johon henkilö tallentaa sähköpostiosoitteen. Mitä minun pitää GDPR:n kannalta tehdä?  
