@@ -69,6 +69,8 @@
 ❗Truly voluntary  
 ❗Unambiguous expression of will  
 
+⚠️ **Check the terms special categories of personal data 👉 [explicit consent (tietosuoja.fi)](https://tietosuoja.fi/en/processing-of-special-categories-of-personal-data)**
+
 ---
 
 ### Relationship Between Privacy Policy and Consent (Source: ChatGPT)  
@@ -135,7 +137,7 @@ Registration alone is not enough to form a contract under GDPR and contract law.
 **Principles for accepting the contract during registration**  
 1. `Clear acceptance action`
     - The user must actively do something, such as:  
-        - Tick a checkbox ("I accept the terms of service and privacy policy").  
+        - Tick a checkbox (`I accept the terms of service and privacy policy`).  
         - Click a button like "Register" or "Create account".  
     - This demonstrates informed consent to the terms.  
 2. `Accessibility of terms and privacy policy`
@@ -190,7 +192,3 @@ When a user registers, make sure that:
 
 > [!NOTE]  
 > There is another contract type: Data Processing Agreement (DPA) → Not covered here.
-
----
-
-Haluatko tämän käännöksen PDF- tai Word-muodossa?

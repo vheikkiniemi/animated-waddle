@@ -69,6 +69,8 @@
 ❗Aidosti vapaaehtoinen  
 ❗Yksiselitteinen tahdonilmaisu  
 
+⚠️ **Tarkista termit erityinen henkilötietoryhmä 👉 [nimenomainen suostumus (tietosuoja.fi)](https://tietosuoja.fi/erityisten-henkilotietoryhmien-kasittely)**
+
 ---
 
 ### Suhde tietosuojaselosteen ja suostumuksen välillä (Lähde: ChatGPT)  
@@ -135,7 +137,7 @@ Pelkkä rekisteröinti ei yksinään riitä sopimuksen syntymiseksi GDPR:n ja so
 **Sopimuksen hyväksymisen periaatteet käyttäjän rekisteröityessä**  
 1. `Selkeä hyväksymistoimi`
     - Käyttäjän on suoritettava aktiivinen toimi, kuten:  
-        - Rastittamalla ruutu ("Hyväksyn palvelun käyttöehdot ja tietosuojaselosteen").
+        - Rastittamalla ruutu (`Hyväksyn palvelun käyttöehdot ja tietosuojaselosteen`).
         - Klikkaamalla painiketta, jossa lukee esimerkiksi "Rekisteröidy" tai "Luo tili".
     - Tämä osoittaa käyttäjän tietoisen suostumuksen palvelun käyttöön ehtojen mukaisesti.  
 2. `Palveluehtojen ja tietosuojakäytäntöjen saavutettavuus`
