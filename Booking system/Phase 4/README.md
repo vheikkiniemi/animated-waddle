@@ -21,187 +21,39 @@
 9. The client, your company, requires that the system complies with GDPR regulations.  
 10. The system provider has stated that the software is developed following the Privacy by Design (PbD) principle.  
 
-**In the previous phase, the theme was authentication. In this phase, we focus on authorization, which is what typically happens after authentication.**
+**In the previous phase, the theme was authorization. In this phase, we focus on GDPR compliance.**
 
-# Web Page Structures and Functionalities for Authorization Testing
+# 🧩 Steps for this assignment
 
-## 🧩 1. Web Page Structure
+**1. Check out the background material**  
+- [Basics of the GDPR (in English)](./material/GDPR_in_brief.md)  
+- [GDPR:n perusteet (in Finnish)](./material/GDPR_lyhyesti.md)
 
-A web application is typically divided into **URLs** (routes) and **HTTP methods** that define how users interact with the application.
-
-### Common structure:
-- **Public pages** (accessible without login)
-  - `/`
-  - `/login`
-  - `/register`
-- **Protected pages** (require authentication)
-  - `/resources`
-  - `/reservation`
-  - `/profile`
-- **Admin/privileged pages**
-  - `/admin/users`
-  - `/admin/settings`
-
----
-
-## 🛠 2. Typical Functionalities to Test
-
-| **Type**              | **Examples**                                 |
-|-----------------------|----------------------------------------------|
-| View content          | Dashboard, listings, read-only pages         |
-| Form submissions      | Login, registration, create/edit resources   |
-| Data modification     | Edit profiles, create reservations, delete   |
-| Privileged actions    | User management, access control, settings    |
-| API calls             | `/api/*` endpoints for frontend/backend      |
-
----
-
-## 🔐 3. What to Focus on in Authorization Testing
-
-### ✅ **Access Control Rules**
-- Can **unauthenticated users** (Guests) access protected pages?
-- Can **Reserver** role access Admin-only functions?
-- Are **API endpoints** enforcing role-based restrictions?
-
-### ✅ **Horizontal Privilege Escalation**
-- Can user A access or modify data of user B?
-  - e.g., `/api/reservations/1` or `/profile?id=5`
-
-### ✅ **Vertical Privilege Escalation**
-- Can a low-privilege user (e.g., Reserver) perform Admin actions?
-  - Submit forms to `/admin` routes
-  - Modify user roles via hidden parameters
-
----
-
-## 🔍 4. Testing Approach
-
-1. **Map pages & APIs**
-   - Use tools like **wfuzz**, **ffuf**, or **dirb** to discover hidden paths.
-   - Map both **GET** and **POST** endpoints.
-
-2. **Test as different roles**
-   - Guest (unauthenticated)
-   - Authenticated user (e.g., Reserver)
-   - Administrator
-
-3. **Inspect functions on each page**
-   - Buttons, forms, APIs, links
-   - Backend-side restrictions (not just hidden in UI)
-
----
-
-## 🎯 5. Goal of Authorization Testing
-
-- Ensure **least privilege** principle (users can only do what they should).
-- Detect **bypass vectors** (direct object references, hidden APIs).
-- Confirm both **frontend** and **backend** enforce authorization properly.
-
----
-
-> Tip: Combine **manual testing** and **automated fuzzing** for maximum coverage!
-
-
-# Authorization testing steps for this assignment
-
-**1. Make sure you have the latest version from the application**
+**2. Make sure you have the latest version from the application**
 - Check:  [The application to docker - Client side](#the-application-to-docker---client-side)
 
----
+**3. Create a new page on Github (markdown) and add the table found in the link below to the page**  
+- [GDPR Checklist](./material/GDPR_Checklist.md)
 
-**2. Create a new page on Github (markdown) and add the following table to the page**
+**4. Go through the checklist you made in the previous step**
 
-| **Page / Feature** | **Guest** | **Reserver** | **Administrator** |
-|:----|:----:|:----:|:----:|
-| `/` (index)                | | | |
-| └─ View resource form      | ❌ | ✅ | ✅ note added |
-| └─ Create new resource     | ❌ *1 | ❌ *2 | ✅ *3 |
+**5. Check the app's privacy policy**
+- You can find it under the name Privacy Policy or at the link `/privacypolicy`
+- If the privacy policy page is blank:
+  - Create a new page on Github (markdown) ➡️ Name privacypolicy.md
+  - Create content for the privacy policy (you can use AI tools, but make sure the content is appropriate)
 
-**Symbols used:**  
-✅ Pass (a note can be added)  
-❌ Fail (a note can be added)  
-⚠️ Attention (a note can be added)
+**6. Check the app's terms of servie**
+- You can find it under the name Terms os Service or at the link `/terms`
+- If the terms of service page is blank:
+  - Create a new page on Github (markdown) ➡️ Name termsofservice.md
+  - Create content for the Terms of Service (you can use AI tools, but make sure the content is appropriate)
 
-**You can also make notes like this:**  
-1. Add some note to this.
-2. Add some note to this.
-3. Add some note to this.
-
-**At this point, you need a table as a template. You will add content during the test.**
-
----
-
-**3. First testing technique: Browser**
-- Familiarize yourself with the functionality of the version as comprehensively as possible.
-  - create users with different roles
-  - make reserveable resources
-  - make reservations
-  - ...
-- **Fill in the table as the testing progresses.**
-
----
-
-**4. Second testing technique: ZAP**
-- Check what kind of alerts are found in the version.
-
-> [!NOTE]  
-> Do a broader test because there are now more pages. 
-> Make sure all pages are tested.
-> **Check How-to video**
-
-- **Save the ZAP report in markdown format.**
-- **Fill in the table as the testing progresses.**
-  - The test can find new pages, for example
-
----
-
-**5. Third testing technique: wfuzz and http**
-- Try to find new pages using wfuzz and http commands.
-- **Fill in the table as the testing progresses.**
-- You can use, for example, the following commands:
-
-**What kind of pages can be found using common words?**
-```bash
-wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/FUZZ
-```
-
-**Is there an API folder and pages under it?**
-```bash
-wfuzz -c -w /usr/share/wordlists/dirb/common.txt --hc 404 http://localhost:8000/api/FUZZ
-```
-
-**Are there any pages in the reservations folder whose name is a number between 1-1000?**
-```bash
-wfuzz -c -z range,1-1000 --hc 404 http://localhost:8000/api/reservations/FUZZ
-```
-
-**When the page is found, then what the page contains?**
-```bash
-http http://localhost:8000/api/reservations/1  
-```
-
----
-
-**OPTIONAL technique: Manual code review**
-- You can find the application code in this same git repo.
-- Review the code.
-- **Fill in the table as the testing progresses.**
-
----
-
-**6. The final step of the test**  
-
-✔️ At this point you should have a comprehensive list of available pages.  
-✔️ The first column of the table should contain **all the pages** found.  
-✔️ In addition, the pages should already have **functions connected to them.**  
-✔️ Functions should be linked to **roles.**  
-✔️ Following an iterative approach **repeat browser testing.**
-
-**`1. Go through the application and compare the functions with the table`**  
-**`2. If something needs to be changed in the table, change it.`**
-
-🎯 **Now you should have a table that shows what resources (pages) and functions are in the application and who can use them.**  
-✅ **Add to the table as a note which application specs are met (especially items 1-8).**
+**7. Check the app's cookie policy**
+- You can find it under the name Cookie Policy or at the link `/cookiepolicy`
+- If the Cookie Policy page is blank:
+  - Create a new page on Github (markdown) ➡️ Name cookiepolicy.md
+  - Create content for the Cookie Policy (you can use AI tools, but make sure the content is appropriate)
 
 ---
 
@@ -209,7 +61,7 @@ http http://localhost:8000/api/reservations/1
 
 ## The application to docker - Client side
 
-**1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%203/docker-compose.yml)**  
+**1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%204/docker-compose.yml)**  
 **2. Try to build and run: `docker compose up --build -d`**  
 **3. If something doesn't work, try: `docker compose logs`**  
 **4. If you want to stop all, try: `docker compose stop`**  
@@ -257,7 +109,3 @@ http http://localhost:8000/api/reservations/1
 ### Volumes
 - `docker volume ls`
 - `docker volume rm <volume_name>`
-
-
-> [!NOTE]  
-> [symbols](https://github.com/ikatyang/emoji-cheat-sheet)
