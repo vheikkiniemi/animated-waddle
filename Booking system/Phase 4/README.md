@@ -1,4 +1,4 @@
-# The Booking system - Phase 4
+# 🔐 The Booking system - Phase 4
 
 > [!NOTE]
 > The material was created with the help of ChatGPT and Copilot.
@@ -57,7 +57,7 @@
 
 ---
 
-# Application deployment
+# 🔨 Application deployment
 
 ## The application to docker - Client side
 
