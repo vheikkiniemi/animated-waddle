@@ -38,20 +38,19 @@
 ❗Lähes jokainen järjestelmä sisältää henkilörekisterin.  
 
 **Kun henkilö on rekisterissä**  
-✅ hänelle syntyy oikeuksia 👉 [Rekisteröidyn oikeudet (tietosuoja.fi)](https://tietosuoja.fi/rekisteroidyn-oikeudet)  
-✅ ja rekisterin pitäjälle velvollisuuksia 👉 [Osoitusvelvollisuus (tietosuoja.fi)](https://tietosuoja.fi/osoitusvelvollisuus)
+🔒 hänelle syntyy oikeuksia 👉 [Rekisteröidyn oikeudet (tietosuoja.fi)](https://tietosuoja.fi/rekisteroidyn-oikeudet)  
+🔒 ja rekisterin pitäjälle velvollisuuksia 👉 [Osoitusvelvollisuus (tietosuoja.fi)](https://tietosuoja.fi/osoitusvelvollisuus)
 
 **Rekisteröidyn oikeuksiin kuuluu saada tietoa henkilötietojen käsittelystä 👉 [Oikeus saada tietoa käsittelystä (tietosuoja.fi)](https://tietosuoja.fi/oikeus-saada-tietoa-kasittelysta)**
 
 **Rekisterin pitäjän tulee kertoa käsittelystä 👉 [Rekisteröidyn informointi (tietosuoja.fi)](https://tietosuoja.fi/rekisteroidyn-informointi)**  
-✅ Informointiin liitty usein termi *tietosuojaseloste* tai *tietosuojalauseke*.
+☝️ Informointiin liitty usein termi *tietosuojaseloste* tai *tietosuojalauseke*.
 
 **Rekisterin pitäjän velvollisuuksiin kuuluu laatia mm. tietyissä tapauksissa 👉 [Seloste käsittelytoimista (tietosuoja.fi)](https://tietosuoja.fi/seloste-kasittelytoimista)**
 
 **Tapaus Centria – Rekisteröidyn informointi**  
-✅ **[Centrian tietosuojakäytänteet (centria.fi)](https://net.centria.fi/centria/tietosuoja/)**  
-✅ **[Esimerkki tietosuojaselosteesta (Centria ➡️ Peppi)](./Centria_Peppi_tietosuojaseloste_20241010_fi.pdf)**
-
+🔗 **[Centrian tietosuojakäytänteet (centria.fi)](https://net.centria.fi/centria/tietosuoja/)**  
+🔗 **[Esimerkki tietosuojaselosteesta (Centria ➡️ Peppi)](./Centria_Peppi_tietosuojaseloste_20241010_fi.pdf)**
 
 ☝️**Rekisteröidylle (käyttäjälle) pitää aina informoida jotain**  
 ❓**Kokeile**: Anna AI-työkalulle (esim. Copilot, ChatGPT) seuraava prompti: *Voitko antaa kuvitteellisilla arvoilla täytetyn esimerkin tietosuojaselosteesta?*
@@ -73,8 +72,8 @@
 ---
 
 ### Suhde tietosuojaselosteen ja suostumuksen välillä (Lähde: ChatGPT)  
-✅ **Tietosuojaseloste**: Tarjoaa tiedot läpinäkyvyyden ja vastuullisuuden varmistamiseksi.  
-✅ **Suostumus (jos käytetään)**: Dokumentoitava ja viitattava tietosuojaselosteessa mainittuihin käsittelytoimiin.
+✔️ **Tietosuojaseloste**: Tarjoaa tiedot läpinäkyvyyden ja vastuullisuuden varmistamiseksi.  
+✔️ **Suostumus (jos käytetään)**: Dokumentoitava ja viitattava tietosuojaselosteessa mainittuihin käsittelytoimiin.
 
 ---
 
@@ -159,13 +158,14 @@ Pelkkä rekisteröinti ei yksinään riitä sopimuksen syntymiseksi GDPR:n ja so
 Käyttäjän rekisteröityessä tulee varmistaa, että:
 1. Käyttäjä suorittaa aktiivisen hyväksymistoimen (esim. rastittaa ruudun tai klikkaa painiketta).
 2. Käyttöehdot ja tietosuojaseloste ovat selkeästi saatavilla.
-Hyväksyminen dokumentoidaan järjestelmään.
-3. Tämä tapa varmistaa, että palvelusopimus syntyy laillisesti ja täyttää sekä GDPR:n että sopimusoikeuden vaatimukset.
+3. Hyväksyminen dokumentoidaan järjestelmään.
+
+☝️ Tämä tapa varmistaa, että palvelusopimus syntyy laillisesti ja täyttää sekä GDPR:n että sopimusoikeuden vaatimukset.
 
 ❓**Kokeile:** Avaa selaimella seuraavat linkit (toiminta testattu 24.3.2024)
-- Finnish 👉 [Yle Tunnus käyttöehdot](https://yle.fi/aihe/a/20-213259)
-- Finnish 👉 [Henkilökohtaisen Yle Tunnus -palvelun kuvaus](https://yle.fi/aihe/a/20-10005896)
-- English 👉 [Yle ID Terms of service](https://yle.fi/aihe/a/20-10001427)
+- Suomeksi 👉 [Yle Tunnus käyttöehdot](https://yle.fi/aihe/a/20-213259)
+- Suomeksi 👉 [Henkilökohtaisen Yle Tunnus -palvelun kuvaus](https://yle.fi/aihe/a/20-10005896)
+- In English 👉 [Yle ID Terms of service](https://yle.fi/aihe/a/20-10001427)
 
 ---
 
