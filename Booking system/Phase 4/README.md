@@ -54,6 +54,7 @@
 - If the Cookie Policy page is blank:
   - Create a new page on Github (markdown) ➡️ Name cookiepolicy.md
   - Create content for the Cookie Policy (you can use AI tools, but make sure the content is appropriate)
+  - [Check this too](https://www.cookieyes.com/blog/session-cookies/)
 
 ---
 
