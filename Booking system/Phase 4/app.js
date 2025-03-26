@@ -4,7 +4,6 @@ import { loginUser } from "./routes/login.js"; // Handles user login logic
 import { getAllUsers, getAccountInfo } from "./routes/user.js";  // CRUD for users
 import { registerResource, getResources, getResourceById, updateResource } from "./routes/resource.js"; // CRUD for resources
 import { registerReservation, handleReservationForm, getReservationById, getReservations, updateReservation } from "./routes/reservation.js"; // CRUD for reservations
-//import { handleIndex, handleDefaultIndex } from "./routes/indexPage.js"; // Render main pages
 import { getSessionInfo, getSession, destroySession, getCookieValue, saveCsrfTokenToSession, getCsrfTokenFromSession } from "./routes/sessionService.js"; // Session management
 
 let connectionInfo = {}; // Store connection details for logging purposes
@@ -124,16 +123,14 @@ async function handler(req) {
 
     // Serve resource management form
     if (url.pathname === "/resources" && req.method === "GET") {
-        // Just for testing!!!
-        //if (!session) return new Response("Unauthorized", { status: 401 });
+        if (!session) return new Response("Unauthorized", { status: 401 });
         const id = url.searchParams.get("id");
         return await serveStaticFile("./views/resource.html", "text/html");
     }
 
     // Handle resource creation or update
     if (url.pathname === "/resources" && req.method === "POST") {
-        // Just for testing!!!
-        //if (!session) return new Response("Unauthorized", { status: 401 });
+        if (!session) return new Response("Unauthorized", { status: 401 });
         const formData = await req.formData();
         if (formData.get("resource_id")) {
             return await updateResource(formData);
@@ -226,7 +223,7 @@ async function handler(req) {
         return await serveStaticFile("./views/cookiepolicy.html", "text/html");
     }
 
-    // Serve  Account page
+    // Serve Account page
     if (url.pathname === "/account" && req.method === "GET") {
         return await serveStaticFile("./views/account.html", "text/html");
     }

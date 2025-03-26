@@ -60,7 +60,7 @@
 
 # 🔨 Application deployment
 
-## The application to docker - Client side
+## ⛓️ The application to docker - Client side
 
 **1. Download the file from (if it doesn't exists): [Docker-compose](https://raw.githubusercontent.com/vheikkiniemi/animated-waddle/refs/heads/main/Booking%20system/Phase%204/docker-compose.yml)**  
 **2. Try to build and run: `docker compose up --build -d`**  
@@ -70,43 +70,86 @@
 
 ---
 
-## The application to docker - Dev side (teacher's notes)
+## 🛡️ The application to docker - Dev side (teacher's notes)
 
-### Database
+### ⚒️ Database
 
-- `docker compose -f 'docker-compose-dev.yml' up -d --build 'database'`
-- `docker exec -it cybersec-db-phase4 psql -U postgres -d postgres`
-- `docker compose -f 'docker-compose-dev.yml' down 'database' --volumes`
+**Building a local container**
+```bash
+docker compose -f 'docker-compose-dev.yml' up -d --build 'database'
+```
 
-**Database folder**
+**Taking a database connection**
+```bash
+docker exec -it cybersec-db-phase4 psql -U postgres -d postgres
+```
 
-- `docker build -t vheikkiniemi/cybersec-db-phase4:v1.0 .`
-- `docker push vheikkiniemi/cybersec-db-phase4:v1.0`
+**Deleting a local container**
+```bash
+docker compose -f 'docker-compose-dev.yml' down 'database' --volumes
+```
 
-> **Multi-platform**
-- `docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-db-phase4:v1.0 --push .`
+**Database folder ➡️ Building and pushing a multi-arch container**
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-db-phase4:v1.0 --push .
+```
 
-### Web
-- `docker compose -f 'docker-compose-dev.yml' up -d --build 'web'`
-- `docker compose -f 'docker-compose-dev.yml' down 'web' --volumes`
+### 🪜 Web
+**Building a local container**
+```bash
+docker compose -f 'docker-compose-dev.yml' up -d --build 'web'
+```
 
-**Root folder**
-- `docker build -t vheikkiniemi/cybersec-web-phase4:v1.0 .`
-- `docker push vheikkiniemi/cybersec-web-phase4:v1.0`
+**Deleting a local container**
+```bash
+docker compose -f 'docker-compose-dev.yml' down 'web' --volumes
+```
 
-> **Multi-platform**
-- `docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-web-phase4:v1.0 --push .`
+**Root folder ➡️ Building and pushing a multi-arch container**
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-web-phase4:v1.0 --push .
+```
 
-### All in
-- `docker compose -p cybersec-phase4 -f 'docker-compose-dev.yml' up --build -d`
-- `docker compose -f 'docker-compose-dev.yml' stop`
-- `docker compose -p cybersec-phase4 -f 'docker-compose-dev.yml' down --volumes`
 
-### Images
-- `docker image ls`
-- `docker rmi <image>`
-- All unused: `docker image prune -a`
+### 🧲 All in
+**Building a local container**
+```bash
+docker compose -p cybersec-phase4 -f 'docker-compose-dev.yml' up --build -d
+```
 
-### Volumes
-- `docker volume ls`
-- `docker volume rm <volume_name>`
+**Stopping a local container**
+```bash
+docker compose -f 'docker-compose-dev.yml' stop
+```
+
+**Deleting a local container**
+```bash
+docker compose -p cybersec-phase4 -f 'docker-compose-dev.yml' down --volumes
+```
+
+### 🛠️ Images
+**Showing local images**
+```bash
+docker image ls
+```
+
+**Deleting a local image**
+```bash
+docker rmi <image>
+```
+
+**Deleting all unused images**
+```bash
+docker image prune -a
+```
+
+### 🔧 Volumes
+**Showing local volumes**
+```bash
+docker volume ls
+```
+
+**Deleting a local volume**
+```bash
+docker volume rm <volume_name>
+```
