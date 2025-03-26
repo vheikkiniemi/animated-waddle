@@ -105,7 +105,7 @@ docker compose -f 'docker-compose-dev.yml' up -d --build 'web'
 docker compose -f 'docker-compose-dev.yml' down 'web' --volumes
 ```
 
-**Root folder ➡️ Building and pushing a multi-arch container**
+**Index `/` folder ➡️ Building and pushing a multi-arch container**
 ```bash
 docker buildx build --platform linux/amd64,linux/arm64 -t vheikkiniemi/cybersec-web-phase4:v1.0 --push .
 ```
