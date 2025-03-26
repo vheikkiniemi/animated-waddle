@@ -1,9 +1,13 @@
 # GDPR Compliance Checklist – Web-based Booking System
 
-<table style="width:100%">
+<table style="width:100%;">
+  <colgroup>
+    <col style="width:20%;">
+    <col style="width:80%;">
+  </colgroup>
   <tr>
-    <th style="width:20%;text-align: center;">Result</th>
-    <th style="width:80%">Personal data mapping and minimization</th>
+    <th style="text-align: center;">Result</th>
+    <th>Personal data mapping and minimization</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -21,10 +25,14 @@
 
 ---
 
-<table style="width:100%">
+<table style="width:100%;">
+  <colgroup>
+    <col style="width:20%;">
+    <col style="width:80%;">
+  </colgroup>
   <tr>
-    <th style="width:20%;text-align: center;">Result</th>
-    <th style="width:80%">User registration and management</th>
+    <th style="text-align: center;">Result</th>
+    <th>User registration and management</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
