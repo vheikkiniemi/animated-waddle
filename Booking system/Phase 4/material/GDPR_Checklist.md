@@ -10,7 +10,7 @@
 
 | **Result** | **User registration and management** |
 | :----: | :--- |
-| &nbsp;✅/❌/⚠️&nbsp; | Does the registration form (page) include GDPR-compliant consent<br> for processing personal data (e.g., acceptance of the privacy policy)?|
+| &nbsp;✅/❌/⚠️&nbsp; | Does the registration form (page) include GDPR-compliant consent for processing<br> personal data (e.g., acceptance of the privacy policy)?|
 | &nbsp;✅/❌/⚠️&nbsp; | Can users view, edit, and delete their own personal data via their account? |
 | &nbsp;✅/❌/⚠️&nbsp; | Is there a mechanism for the administrator to delete a reserver in<br> accordance with the "right to be forgotten"? |
 | &nbsp;✅/❌/⚠️&nbsp; | Is underage registration (under 15 years) and booking functionality restricted? |
@@ -20,7 +20,7 @@
 | **Result** | **Booking visibility** |
 | :----: | :--- |
 | &nbsp;✅/❌/⚠️&nbsp; | Are bookings visible to non-logged-in users only at the resource level<br> (without any personal data)? |
-| &nbsp;✅/❌/⚠️&nbsp; | Is it ensured that names, emails, or other personal data of bookers<br> are not exposed publicly or to unauthorized users? |
+| &nbsp;✅/❌/⚠️&nbsp; | Is it ensured that names, emails, or other personal data of bookers are not exposed<br> publicly or to unauthorized users? |
 
 --- 
 
@@ -28,7 +28,7 @@
 | :----: | :--- |
 | &nbsp;✅/❌/⚠️&nbsp; | Have you ensured that only administrators can add, modify, and delete<br> resources and bookings? |
 | &nbsp;✅/❌/⚠️&nbsp; | Is the system using role-based access control (e.g., reserver vs. administrator)? |
-| &nbsp;✅/❌/⚠️&nbsp; | Are administrator privileges limited to ensure GDPR compliance<br> (e.g., administrators cannot use data for unauthorized purposes)? |
+| &nbsp;✅/❌/⚠️&nbsp; | Are administrator privileges limited to ensure GDPR compliance (e.g., administrators<br> cannot use data for unauthorized purposes)? |
 
 ---
 
@@ -67,7 +67,7 @@
 | **Result** | **Documentation and communication** |
 | :----: | :--- |
 | &nbsp;✅/❌/⚠️&nbsp; | Is there a privacy policy available to users during <br>registration and easily accessible? |
-| &nbsp;✅/❌/⚠️&nbsp; | Are administrators and developers provided with documented data protection<br> practices and processing activities? |
+| &nbsp;✅/❌/⚠️&nbsp; | Are administrators and developers provided with documented data protection practices <br>and processing activities? |
 | &nbsp;✅/❌/⚠️&nbsp; | Is there a documented data breach response process <br>(e.g., how to notify authorities and users of a breach)? |
 
 ---
