@@ -1,6 +1,6 @@
 services:
   database:
-    image: vheikkiniemi/cybersec-db-phase4:v1.0
+    image: vheikkiniemi/cybersec-db-phase4:v1.1
     restart: always
     container_name: cybersec-db-phase4
     environment:
@@ -12,7 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   web:
-    image: vheikkiniemi/cybersec-web-phase4:v1.0
+    image: vheikkiniemi/cybersec-web-phase4:v1.1
     container_name: cybersec-web-phase4
     restart: always
     ports:
