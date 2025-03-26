@@ -1,6 +1,6 @@
 # GDPR Compliance Checklist – Web-based Booking System
 
-<table style="width:100%;">
+<table style="table-layout: fixed; width: 100%;">
   <colgroup>
     <col style="width:20%;">
     <col style="width:80%;">
@@ -25,7 +25,7 @@
 
 ---
 
-<table style="width:100%;">
+<table style="table-layout: fixed; width: 100%;">
   <colgroup>
     <col style="width:20%;">
     <col style="width:80%;">
