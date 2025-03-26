@@ -10,10 +10,10 @@
 
 | **Result** | **User registration and management** |
 | :--------: | :--- |
-| ✅/❌/⚠️ | Does the registration form (page) include GDPR-compliant consent for processing personal data (e.g., acceptance of the privacy policy)?|
-| ✅/❌/⚠️ | Can users view, edit, and delete their own personal data via their account? |
-| ✅/❌/⚠️ | Is there a mechanism for the administrator to delete a reserver in accordance with the "right to be forgotten"? |
-| ✅/❌/⚠️ | Is underage registration (under 15 years) and booking functionality restricted? |
+| ✅/❌/⚠️&nbsp;&nbsp;&nbsp; | Does the registration form (page) include GDPR-compliant consent for processing personal data (e.g., acceptance of the privacy policy)?|
+| ✅/❌/⚠️&nbsp;&nbsp;&nbsp; | Can users view, edit, and delete their own personal data via their account? |
+| ✅/❌/⚠️&nbsp;&nbsp;&nbsp; | Is there a mechanism for the administrator to delete a reserver in accordance with the "right to be forgotten"? |
+| ✅/❌/⚠️&nbsp;&nbsp;&nbsp; | Is underage registration (under 15 years) and booking functionality restricted? |
 
 ---
 
