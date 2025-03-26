@@ -3,7 +3,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Personal data mapping and minimization</th>
+    <th style="width:80%">Personal data mapping and minimization</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -24,7 +24,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>User registration and management</th>
+    <th style="width:80%">User registration and management</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -49,7 +49,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Booking visibility</th>
+    <th style="width:80%">Booking visibility</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -66,7 +66,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Access control and authorization</th>
+    <th style="width:80%">Access control and authorization</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -87,7 +87,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Privacy by Design Principles</th>
+    <th style="width:80%">Privacy by Design Principles</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -108,7 +108,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Data security</th>
+    <th style="width:80%">Data security</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -133,7 +133,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Data anonymization and pseudonymization</th>
+    <th style="width:80%">Data anonymization and pseudonymization</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -150,7 +150,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Data subject rights</th>
+    <th style="width:80%">Data subject rights</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
@@ -171,7 +171,7 @@
 <table style="width:100%">
   <tr>
     <th style="width:20%;text-align: center;">Result</th>
-    <th>Documentation and communication</th>
+    <th style="width:80%">Documentation and communication</th>
   </tr>
   <tr>
     <td style="text-align: center;">✅/❌/⚠️</td>
