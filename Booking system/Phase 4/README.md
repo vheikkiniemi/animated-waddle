@@ -30,7 +30,7 @@
 - [GDPR:n perusteet (in Finnish)](./material/GDPR_lyhyesti.md)
 
 **2. Make sure you have the latest version from the application**
-- Check:  [The application to docker - Client side](#the-application-to-docker---client-side)
+- Check:  [The application to docker - Client side](#️-the-application-to-docker---client-side)
 
 **3. Create a new page on Github (markdown) and add the table found in the link below to the page**  
 - [GDPR Checklist](./material/GDPR_Checklist.md)
